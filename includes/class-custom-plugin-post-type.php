@@ -22,30 +22,31 @@ class Custom_Plugin_Post_Types
     public function register_post_types()
     {
         // Register Blog Post Type
-        register_post_type('blog',
+        register_post_type('questionnaire',
             array(
                 'labels' => array(
-                    'name' => __('Blog'),
-                    'singular_name' => __('Blog'),
+                    'name' => __('Questionnaire'),
+                    'singular_name' => __('Questionnaire'),
                 ),
+                'menu_icon' => 'dashicons-book',
                 'public' => true,
                 'has_archive' => true,
-                'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+                'supports' => array('title','thumbnail'),
             )
         );
 
         // Register Mobil Post Type
-        register_post_type('mobil',
-            array(
-                'labels' => array(
-                    'name' => __('Mobil'),
-                    'singular_name' => __('Mobil'),
-                ),
-                'public' => true,
-                'has_archive' => true,
-                'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
-            )
-        );
+        // register_post_type('mobil',
+        //     array(
+        //         'labels' => array(
+        //             'name' => __('Mobil'),
+        //             'singular_name' => __('Mobil'),
+        //         ),
+        //         'public' => true,
+        //         'has_archive' => true,
+        //         'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+        //     )
+        // );
     }
 }
 

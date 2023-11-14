@@ -114,7 +114,7 @@ class Custom_Plugin {
 		/**
 		 * Class untuk mendaftarkan custom post type.
 		 */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-custom-plugin-post-type.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-custom-plugin-post-type.php';
 
 		/**
 		 * Class untuk menggunakan backend post fiel metabox io.
@@ -140,7 +140,7 @@ class Custom_Plugin {
 		/**
 		 * Custom Function
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/custom-function.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/custom-function.php';
 
 		$this->loader = new Custom_Plugin_Loader();
 
