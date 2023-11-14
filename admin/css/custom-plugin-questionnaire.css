@@ -1,0 +1,7 @@
+.cmb2-postbox .cmb-row:not(:last-of-type) {
+  border: none !important;
+}
+.cmb-row {
+  padding: 5px !important;
+  margin: 3px !important;
+}
