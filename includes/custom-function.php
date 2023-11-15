@@ -28,3 +28,31 @@ function cmb2_missing_notice() {
     </div>
     <?php
 }
+
+// Fungsi untuk menangani AJAX request
+function save_hasil_questionnaire() {
+    // Periksa apakah request adalah POST dan memiliki data yang diperlukan
+    if (isset($_POST['formData'])) {
+        // Lakukan logika penyimpanan atau manipulasi data sesuai kebutuhan Anda
+        $formData = $_POST['formData'] ?? 'data tidak di submit';
+
+        // Simpan atau proses data sesuai kebutuhan
+
+        // Contoh: Menyimpan data menggunakan metode update_post_meta
+        // update_post_meta($formId, '_selected_value', $selectedValue);
+
+        // Beri respons ke klien
+        // echo 'Data berhasil disimpan';
+        print_r($formData);
+    } else {
+        // Jika data tidak lengkap, beri respons error
+        echo 'Error: Data tidak lengkap';
+    }
+
+    // Penting: Jangan lupa akhiri proses AJAX dengan exit
+    exit();
+}
+
+// Daftarkan fungsi di WordPress untuk AJAX request
+add_action('wp_ajax_update_hasil_questionnaire', 'save_hasil_questionnaire');
+add_action('wp_ajax_nopriv_update_hasil_questionnaire', 'save_hasil_questionnaire');

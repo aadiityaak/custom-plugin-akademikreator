@@ -10,4 +10,71 @@
 .wss-w-50 {
   width: 50%;
 }
+.wss-p-1 {
+  padding: 0.7em;
+}
+.wss-pl-2 {
+  padding-left: 2em;
+}
+.wss-mb-2 {
+  margin-bottom: 2em;
+}
+.wss-d-none {
+  display: none;
+}
+.wss-d-block {
+  display: block;
+}
+.wss-d-iline-block {
+  display: inline-block;
+}
+.question-title {
+  font-size: 19px;
+  border-left: 4px solid #ff4f4f;
+  padding: 3px 12px;
+  margin-bottom: 20px;
+  background: #000;
+  font-weight: 700;
+}
+.wss-question-frame input[type="radio"] + label {
+  position: relative;
+}
+.wss-question-frame input[type="radio"] + label::before {
+  content: "";
+  background-image: url("../svg/circle.svg");
+  width: 24px; /* Sesuaikan dengan ukuran SVG Anda */
+  height: 24px;
+  display: inline-block;
+  position: absolute;
+  left: 0px;
+  background-size: cover;
+}
+.wss-question-frame input[type="radio"]:checked + label::before {
+  content: "";
+  background-image: url("../svg/check2-circle.svg");
+}
+.wss-cursor-pointer {
+  cursor: pointer;
+}
+.wss-btn-submit {
+  border-radius: 7px;
+  padding: 7px 15px;
+  border: none;
+  color: #fff;
+  background: #ff4f4f;
+}
+.wss-btn-submit:hover {
+  background: #333333;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.wss-loading {
+  animation: spin 1s linear infinite; /* Ganti dengan durasi atau properti animasi yang sesuai */
+}
 /*# sourceMappingURL=style.min.css.map */

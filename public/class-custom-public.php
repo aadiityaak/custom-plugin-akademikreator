@@ -96,7 +96,14 @@ class Custom_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/script.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'custom-plugin-handle', plugin_dir_url( __FILE__ ) . 'js/script.min.js', array( 'jquery' ), $this->version, false );
+		    // Variabel yang akan dikirim ke dalam skrip
+			$script_params = array(
+				'ajaxurl' => admin_url('admin-ajax.php')
+			);
+		
+			// Terapkan variabel ke dalam skrip JavaScript
+			wp_localize_script('custom-plugin-handle', 'custom_plugin', $script_params);
 
 	}
 
