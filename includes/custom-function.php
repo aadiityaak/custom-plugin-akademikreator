@@ -124,7 +124,26 @@ function save_hasil_questionnaire() {
     exit();
 }
 
-
 // Daftarkan fungsi di WordPress untuk AJAX request
 add_action('wp_ajax_update_hasil_questionnaire', 'save_hasil_questionnaire');
 // add_action('wp_ajax_nopriv_update_hasil_questionnaire', 'save_hasil_questionnaire');
+
+
+
+ // Add custom column to the user list table
+ add_filter('manage_users_columns', 'add_custom_column_to_user_list');
+ // Display content in the custom column
+ add_action('manage_users_custom_column', 'display_content_in_custom_column', 10, 3);
+ // Add custom column to the user list table
+function add_custom_column_to_user_list($columns) {
+    $columns['total_score'] = 'Total Score';
+    return $columns;
+}
+
+// Display content in the custom column
+function display_content_in_custom_column($value, $column_name, $user_id) {
+    if ($column_name === 'total_score') {
+        // Use the [total_score] shortcode for the specific user
+        return calculate_user_total_score($user_id);
+    }
+}
