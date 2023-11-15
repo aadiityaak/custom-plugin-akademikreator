@@ -5,3 +5,31 @@
   padding: 5px !important;
   margin: 3px !important;
 }
+.cmb-remove-group-row:before {
+  display: none !important;
+}
+.cmb-remove-group-row-button {
+  background-color: rgb(255, 93, 93) !important;
+  color: #fff !important;
+  border: none !important;
+}
+.cmb-shift-rows {
+  background-color: #333 !important;
+  color: #fff !important;
+  border: none !important;
+}
+.cmb-shift-rows > span {
+  margin: 5px 0 !important;
+}
+#poststuff .repeatable .cmb-group-title {
+  padding: 10px !important;
+  border-radius: 7px 7px 0 0;
+  font-size: 14px;
+  font-weight: bold;
+  background: #deedff;
+}
+.regular-text,
+.cmb2_select {
+  width: 100% !important;
+  border-color: #ddd !important;
+}

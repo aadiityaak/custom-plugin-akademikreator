@@ -51,6 +51,9 @@ class Custom_Plugin_CMB2 {
             'name' => esc_html__('Pertanyaan', 'your-text-domain'),
             'id'   => $prefix . 'question',
             'type' => 'wysiwyg',
+            'options' => array(
+                'textarea_rows' => 4,
+            ),
         ));
 
         $cmb->add_group_field($group_field_id, array(
@@ -97,8 +100,7 @@ class Custom_Plugin_CMB2 {
      */
     public function enqueue_custom_styles($hook) {
         global $post_type;
-
-        if ('post-new.php' === $hook && 'questionnaire' === $post_type) {
+        if (('post.php' === $hook || 'post-new.php' === $hook) && 'questionnaire' === $post_type) {
             wp_enqueue_style('custom-questionnaire-style', plugin_dir_url(__FILE__) . '../admin/css/custom-plugin-questionnaire.css', array(), $this->version, 'all');
         }
     }
