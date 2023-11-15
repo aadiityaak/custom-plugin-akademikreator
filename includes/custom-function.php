@@ -45,8 +45,40 @@ function save_hasil_questionnaire() {
             'post_type'     => 'questionnaire_result',
         );
 
-        // Insert the post into the database
-        $post_id = wp_insert_post($new_post);
+        $args = array(
+            'post_type'      => 'questionnaire_result',
+            'posts_per_page' => 1, // Only retrieve one post
+            'meta_query'     => array(
+                'relation' => 'AND',
+                array(
+                    'key'   => 'id_member',
+                    'value' => $id_member,
+                ),
+                array(
+                    'key'   => 'id_questionnaire',
+                    'value' => $id_questionnaire,
+                ),
+            ),
+        );
+        
+        // Create a new WP_Query instance
+        $query = new WP_Query($args);
+        
+        // Check if there are posts found
+        if ($query->have_posts()) {
+            // Loop through the posts
+            while ($query->have_posts()) {
+                $query->the_post();
+                // Get the post ID
+                $post_id = get_the_ID();
+            }
+            // Reset post data
+            wp_reset_postdata();
+        } else {
+            // Insert the post into the database
+            $post_id = wp_insert_post($new_post);
+        }
+
 
         // Save answers
         $ans = $anscheck = [];
