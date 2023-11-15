@@ -19,14 +19,14 @@ class Custom_Plugin_CMB2 {
      * Custom_Plugin_CMB2 constructor.
      */
     public function __construct() {
-        add_action('cmb2_init', array($this, 'register_metabox'));
+        add_action('cmb2_init', array($this, 'register_metabox_questionnaire'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_custom_styles'));
     }
 
     /**
      * Register metabox with CMB2.
      */
-    public function register_metabox() {
+    public function register_metabox_questionnaire() {
         $prefix = '_cmb2_qa_group_';
 
         $cmb = new_cmb2_box(array(
@@ -94,6 +94,7 @@ class Custom_Plugin_CMB2 {
             'display_cb' => array($this, 'display_correct_answer_field'), // Metode untuk menampilkan field.
         ));
     }
+    
 
     /**
      * Enqueue custom styles only on 'post-new.php' for 'questionnaire' post type.

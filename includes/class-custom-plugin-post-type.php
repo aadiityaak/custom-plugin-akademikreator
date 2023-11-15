@@ -37,6 +37,22 @@
                  'supports' => array('title', 'thumbnail'),
              )
          );
+        // Register Hasil Questionnaire Post Type
+        register_post_type('questionnaire_result',
+            array(
+                'labels' => array(
+                    'name' => __('Questionnaire Result'),
+                    'singular_name' => __('Questionnaire Result'),
+                ),
+                'menu_icon' => 'dashicons-book',
+                'public' => true,
+                'has_archive' => true,
+                'supports' => array('title', 'thumbnail'),
+                'show_in_menu' => 'edit.php?post_type=questionnaire', // Menetapkan sub menu
+                'menu_position' => 20, // Menetapkan posisi dalam sub menu
+            )
+        );
+
      }
  
      /**
