@@ -37,14 +37,14 @@ class Custom_Plugin_Meta_Box {
                 array(
                     'type' => 'post',
                     'name' => esc_html__('ID Questionnaire', 'online-generator'),
-                    'id'   => 'questionnaire',
+                    'id'   => 'id_questionnaire',
                     'post_type'  => 'questionnaire',
                     'field_type' => 'select_advanced',
                 ),
                 array(
                     'type' => 'text',
-                    'name' => esc_html__('Nilai', 'online-generator'),
-                    'id'   => $prefix . 'nilai',
+                    'name' => esc_html__('Score', 'online-generator'),
+                    'id'   => $prefix . 'score',
                 ),
                 array(
                     'type' => 'key_value',

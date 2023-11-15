@@ -35,6 +35,14 @@ class Custom_Plugin_CMB2 {
             'object_types' => array('questionnaire'), // Sesuaikan dengan jenis pos yang ingin Anda tambahkan metabox ini.
         ));
 
+        $cmb->add_field(array(
+            'name' => esc_html__('Score', 'your-text-domain'),
+            'id'   => $prefix . 'score',
+            'type' => 'text',
+            'description' => esc_html__('Score yang didapat saat semua jawaban benar', 'your-text-domain'),
+            // Add any other necessary options here
+        ));
+
         $group_field_id = $cmb->add_field(array(
             'id'          => $prefix . 'qa_group',
             'type'        => 'group',

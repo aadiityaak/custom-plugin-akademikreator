@@ -45,7 +45,7 @@
                     $qnas = get_post_meta($post_id, '_cmb2_qa_group_qa_group', true);
                     $options = ['a','b','c','d'];
                     $i = 1;
-                    echo '<form class="questionnaire-frame wss-mb-2" data-id="">';
+                    echo '<form class="questionnaire-frame wss-mb-2" data-id="'.$post_id.'">';
                     foreach($qnas as $qna){
                         $j = $i++;
                         ?>
