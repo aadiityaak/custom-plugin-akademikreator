@@ -17,7 +17,9 @@
         add_action('init', array($this, 'register_taxonomies')); // Tambahkan hook untuk registrasi taksonomi
         // Hook into the 'template_include' action
         add_filter('template_include', array($this, 'custom_questionnaire_template'));
-     }
+        add_filter('manage_questionnaire_result_posts_columns', array($this, 'add_custom_columns_questionnaire_result'));
+        add_action('manage_questionnaire_result_posts_custom_column', array($this, 'display_custom_columns_questionnaire_result'), 10, 2);
+    }
  
      /**
       * Register custom post types
@@ -91,6 +93,42 @@
 
         return $template;
     }
+
+    // Add this code to your theme's functions.php file or in a custom plugin
+
+    public function add_custom_columns_questionnaire_result($columns) {
+        // Add custom columns
+        $columns['score'] = 'Score';
+        $columns['id_member'] = 'Member (Responden)';
+        $columns['id_questionnaire'] = 'Questionnaire';
+
+        return $columns;
+    }
+    
+
+    public function display_custom_columns_questionnaire_result($column, $post_id) {
+        // Display custom column values
+        switch ($column) {
+            case 'score':
+                $score = get_post_meta($post_id, 'score', true);
+                echo esc_html($score);
+                break;
+            case 'id_member':
+                $id_member = get_post_meta($post_id, 'id_member', true);
+                $user_info = get_userdata($id_member);
+                $username = $user_info->user_login;
+                echo esc_html($username);
+                break;
+            case 'id_questionnaire':
+                $id_questionnaire = get_post_meta($post_id, 'id_questionnaire', true);
+                $title_questionnaire = get_the_title($id_questionnaire);
+                $url_questionnaire = get_the_permalink($id_questionnaire);
+                echo '<a target="_blank" href="'.$url_questionnaire.'">'.$title_questionnaire.'</a>';
+                break;
+            // Add more cases for additional columns if needed
+        }
+    }
+    
  }
  
  // Inisialisasi class Custom_Post_Types_Register
