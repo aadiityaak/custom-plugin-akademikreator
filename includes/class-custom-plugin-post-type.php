@@ -22,6 +22,9 @@
 
         add_filter('manage_questionnaire_posts_columns', array($this, 'add_custom_columns_questionnaire'));
         add_action('manage_questionnaire_posts_custom_column', array($this, 'display_custom_columns_questionnaire'), 10, 2);
+
+        add_filter('manage_modul_video_posts_columns', array($this, 'add_custom_columns_modul_video'));
+        add_action('manage_modul_video_posts_custom_column', array($this, 'display_custom_columns_modul_video'), 10, 2);
     }
  
      /**
@@ -58,15 +61,15 @@
             )
         );
          // Register Questionnaire Post Type
-         register_post_type('questionnaire',
+         register_post_type('modul_video',
              array(
                  'labels' => array(
-                     'name' => __('Questionnaire'),
-                     'singular_name' => __('Questionnaire'),
+                     'name' => __('Modul Video'),
+                     'singular_name' => __('Modul Video'),
                  ),
-                 'menu_icon' => 'dashicons-book',
+                 'menu_icon' => 'dashicons-video-alt3',
                  'public' => true,
-                 'has_archive' => true,
+                 'has_archive' => false,
                  'supports' => array('title', 'thumbnail'),
              )
          );
@@ -82,7 +85,7 @@
          register_taxonomy('category_questionnaire', 'questionnaire', array(
              'labels' => array(
                  'name' => __('Categories Questionnaire'),
-                 'singular_name' => __('Questionnaire'),
+                 'singular_name' => __('Categories Questionnaire'),
              ),
              'hierarchical' => true,
              'show_ui' => true,
@@ -90,6 +93,18 @@
              'query_var' => true,
              'rewrite' => array('slug' => 'category_questionnaire'),
          ));
+
+         register_taxonomy('category_modul', 'modul_video', array(
+            'labels' => array(
+                'name' => __('Categories Moduls'),
+                'singular_name' => __('Categories Moduls'),
+            ),
+            'hierarchical' => true,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'query_var' => true,
+            'rewrite' => array('slug' => 'category_modul'),
+        ));
      }
 
     /**
@@ -160,6 +175,8 @@
         $columns['questionnaire'] = 'Questionnaire';
         return $columns;
     }
+
+    
     
 
     public function display_custom_columns_questionnaire($column, $post_id) {
@@ -172,6 +189,31 @@
             case 'questionnaire':
                 $questionnaire = get_post_meta($post_id, '_cmb2_qa_group_qa_group', true);
                 echo count($questionnaire);
+                break;
+            // Add more cases for additional columns if needed
+        }
+    }
+
+    public function add_custom_columns_modul_video($columns) {
+        // Add custom columns
+        $columns['score'] = 'Score Minimal';
+        $columns['url_modul'] = 'Modul URL';
+        return $columns;
+    }
+
+    
+    
+
+    public function display_custom_columns_modul_video($column, $post_id) {
+        // Display custom column values
+        switch ($column) {
+            case 'score':
+                $score = get_post_meta($post_id, 'score', true);
+                echo esc_html($score);
+                break;
+            case 'url_modul':
+                $questionnaire = get_post_meta($post_id, 'url_modul', true);
+                echo $questionnaire;
                 break;
             // Add more cases for additional columns if needed
         }

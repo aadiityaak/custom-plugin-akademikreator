@@ -1,5 +1,10 @@
 .wss-card {
-  padding: 5px;
+  background-color: #191919;
+  border-radius: 0 0 10px 10px;
+}
+.wss-card h3 {
+  padding: 10px 15px;
+  color: #fff;
 }
 .wss-d-flex {
   display: flex;
@@ -13,10 +18,16 @@
 .wss-w-50 {
   width: 50%;
 }
+.wss-w-100 {
+  width: 100%;
+}
 /* medium md */
 @media (min-width: 768px) {
   .wss-w-md-25 {
     width: 25%;
+  }
+  .wss-w-md-33 {
+    width: 33.3%;
   }
 }
 .wss-floating-badge {

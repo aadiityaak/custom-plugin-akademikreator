@@ -29,7 +29,7 @@ global $post;
                     ?>
                     
                     <div class="wss-w-50 wss-w-md-25 wss-position-relative wss-p-1">
-                        <a class="wss-d-block" href="<?php echo get_the_permalink(); ?>">
+                        <a class="wss-d-block wss-card" href="<?php echo get_the_permalink(); ?>">
                             <div class="wss-ratio wss-ratio-3x4">
                                 <img src="
                                 <?php 

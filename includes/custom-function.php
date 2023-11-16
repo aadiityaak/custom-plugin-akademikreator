@@ -156,3 +156,85 @@ function theme_register_menus() {
     );
 }
 add_action('after_setup_theme', 'theme_register_menus');
+
+function wss_menu_sidebar_courses() {
+    ?>
+        <li>
+            <a href="?page=for-you">For You</a>
+        </li>
+    <?php
+}
+add_action('wss-left-sidebar-courses', 'wss_menu_sidebar_courses');
+
+function wss_page_courses() {
+    $page = $_GET['page'] ?? '';
+    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+    $user_id = get_current_user_id();
+    $user_score = calculate_user_total_score($user_id);
+    ?>
+    <link href="<?php echo plugin_dir_url( __FILE__ );?>../public/css/style.min.css" rel="stylesheet" />
+    <div class="wss-w-100">
+        Score anda <?php echo $user_score; ?>
+    </div>
+    <?php
+    $args = array(
+        'post_type' => 'modul_video',
+        'meta_query' => array(
+            array(
+                'key' => 'score',
+                'value' => $user_score,
+                'compare' => '<=',
+                'type' => 'NUMERIC',
+            ),
+        ),
+        'posts_per_page' => 10,
+        'paged' => $paged,
+    );
+    
+    $query = new WP_Query($args);
+    
+    if ($query->have_posts()) :
+        while ($query->have_posts()) : $query->the_post();
+            // Loop konten post di sini
+            ?>
+                <div class="wss-w-50 wss-w-md-33 wss-position-relative wss-p-1">
+                    <a class="wss-d-block wss-card" href="<?php echo get_the_permalink(); ?>">
+                        <div class="wss-ratio wss-ratio-3x4">
+                            <img src="<?php 
+                            $thumbnail_url = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), array('220','220'), true );
+                            $thumbnail_url = $thumbnail_url[0];
+                            echo $thumbnail_url;
+                            ?>" alt="<?php echo get_the_title(); ?>"/>
+                        </div>
+
+                        <span class="wss-floating-badge">
+                            <?php 
+                            $first_term_name = get_the_terms( $post->ID, 'category_modul' )[0]->name;
+                            echo $first_term_name ;
+                            ?>
+                        </span>
+                        <h3 class="wss-pt-1">
+                            <?php echo get_the_title(); ?>
+                        </h3>
+                    </a>
+                </div>
+            <?php
+        endwhile;
+    
+        // Tampilkan pagination dengan angka 1, 2, 3, dst.
+        echo paginate_links(array(
+            'total' => $query->max_num_pages,
+            'prev_text' => __('Previous', 'textdomain'),
+            'next_text' => __('Next', 'textdomain'),
+            'type' => 'plain', // Gunakan 'plain' untuk pagination dengan angka
+        ));
+    
+        // Kembalikan settingan global post
+        wp_reset_postdata();
+    else :
+        // Jika tidak ada post yang sesuai
+        echo __('No posts found', 'textdomain');
+    endif;
+    
+}
+add_action('wss-page-courses', 'wss_page_courses');

@@ -2,6 +2,12 @@
 
 Plugin starter untuk menambah fitur untuk web klien. Berisi beberapa contoh fitur untuk mempercepat prosses pengerjaan.
 
+## Modif plugin lain
+
+```bash
+\memberpress-courses\app\views\classroom\courses_archive_course.php
+```
+
 ## Documentation
 
 Hapus // pada require file sesuai kebutuhan. Penambahan class yang sering di gunakan mohon langsung kontribusi ke github.
