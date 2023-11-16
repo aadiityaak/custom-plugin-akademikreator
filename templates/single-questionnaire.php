@@ -16,7 +16,6 @@
  }
  
  
- $magic_elementor_blog_container = get_theme_mod('magic_elementor_blog_container', 'mg-wrapper');
  $magic_elementor_blog_layout = get_theme_mod('magic_elementor_blog_layout', 'rightside');
  
  if (is_active_sidebar('sidebar-1') && $magic_elementor_blog_layout != 'fullwidth' && 'post' == get_post_type()) {
@@ -24,12 +23,13 @@
  } else {
      $magic_elementor_blog_column = 'mg-grid-12';
  }
+ 
  get_header();
  ?>
  
  
  
- <div class="<?php echo esc_attr($magic_elementor_blog_container); ?> mg-main-blog nxsingle-post">
+ <div class="wss-container mg-main-blog nxsingle-post wss-pt-3">
      <div class="mg-flex">
          <?php if (is_active_sidebar('sidebar-1') && $magic_elementor_blog_layout == 'leftside' && 'post' === get_post_type()) : ?>
              <div class="mg-grid-3">
@@ -51,7 +51,7 @@
                         ?>
                         <div class="wss-card wss-question-frame wss-mb-2">
                             <h3 class="question-title"><?php echo $qna['_cmb2_qa_group_question']; ?></h3>
-                            <div class="wsss-d-flex wsss-flex-wrap">
+                            <div class="wss-d-flex wsss-flex-wrap">
                                 <?php
                                 foreach($options as $option){
                                     ?>
@@ -80,21 +80,8 @@
                     </form>
                     <?php
  
-                     the_post_navigation(
-                         array(
-                             'prev_text' => '<span class="nav-subtitle">' . esc_html__('Previous:', 'magic-elementor') . '</span> <span class="nav-title">%title</span>',
-                             'next_text' => '<span class="nav-subtitle">' . esc_html__('Next:', 'magic-elementor') . '</span> <span class="nav-title">%title</span>',
-                         )
-                     );
- 
-                     // If comments are open or we have at least one comment, load up the comment template.
-                     if (comments_open() || get_comments_number()) :
-                         comments_template();
-                     endif;
- 
                  endwhile; // End of the loop.
                  ?>
-                 </form>
  
              </main><!-- #main -->
          </div>

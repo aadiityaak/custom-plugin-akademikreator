@@ -59,3 +59,17 @@ function total_score_shortcode($atts) {
     // Return the total score
     return 'Total Score for User ' . $user_id . ': ' . $total_score;
 }
+
+function wss_primary_menu_shortcode() {
+    // Menampilkan menu utama
+    return wp_nav_menu(array(
+        'theme_location' => 'questionnaire-menu',
+        'container' => 'nav',
+        'container_class' => 'questionnaire-menu-container',
+        'menu_class' => 'questionnaire-menu wss-d-flex wss-align-item-end',
+        'echo' => false, // Mengembalikan output sebagai string, bukan mencetak langsung
+    ));
+}
+
+// Mendaftarkan shortcode
+add_shortcode('wss-primary-menu', 'wss_primary_menu_shortcode');

@@ -19,6 +19,9 @@
         add_filter('template_include', array($this, 'custom_questionnaire_template'));
         add_filter('manage_questionnaire_result_posts_columns', array($this, 'add_custom_columns_questionnaire_result'));
         add_action('manage_questionnaire_result_posts_custom_column', array($this, 'display_custom_columns_questionnaire_result'), 10, 2);
+
+        add_filter('manage_questionnaire_posts_columns', array($this, 'add_custom_columns_questionnaire'));
+        add_action('manage_questionnaire_posts_custom_column', array($this, 'display_custom_columns_questionnaire'), 10, 2);
     }
  
      /**
@@ -54,6 +57,19 @@
                 'menu_position' => 20, // Menetapkan posisi dalam sub menu
             )
         );
+         // Register Questionnaire Post Type
+         register_post_type('questionnaire',
+             array(
+                 'labels' => array(
+                     'name' => __('Questionnaire'),
+                     'singular_name' => __('Questionnaire'),
+                 ),
+                 'menu_icon' => 'dashicons-book',
+                 'public' => true,
+                 'has_archive' => true,
+                 'supports' => array('title', 'thumbnail'),
+             )
+         );
 
      }
  
@@ -83,11 +99,20 @@
     {
         if (is_singular('questionnaire')) {
             // Path ke file template khusus untuk single 'questionnaire'
-            $custom_template = plugin_dir_path(__FILE__) . '../templates/single-questionnaire.php';
+            $single_template = plugin_dir_path(__FILE__) . '../templates/single-questionnaire.php';
 
             // Periksa apakah file template khusus ada
-            if (file_exists($custom_template)) {
-                return $custom_template;
+            if (file_exists($single_template)) {
+                return $single_template;
+            }
+        }
+        if (is_archive('questionnaire')) {
+            // Path ke file template khusus untuk single 'questionnaire'
+            $archive_template = plugin_dir_path(__FILE__) . '../templates/archive-questionnaire.php';
+
+            // Periksa apakah file template khusus ada
+            if (file_exists($archive_template)) {
+                return $archive_template;
             }
         }
 
@@ -124,6 +149,29 @@
                 $title_questionnaire = get_the_title($id_questionnaire);
                 $url_questionnaire = get_the_permalink($id_questionnaire);
                 echo '<a target="_blank" href="'.$url_questionnaire.'">'.$title_questionnaire.'</a>';
+                break;
+            // Add more cases for additional columns if needed
+        }
+    }
+
+    public function add_custom_columns_questionnaire($columns) {
+        // Add custom columns
+        $columns['score'] = 'Total Score';
+        $columns['questionnaire'] = 'Questionnaire';
+        return $columns;
+    }
+    
+
+    public function display_custom_columns_questionnaire($column, $post_id) {
+        // Display custom column values
+        switch ($column) {
+            case 'score':
+                $score = get_post_meta($post_id, '_cmb2_qa_group_score', true);
+                echo esc_html($score);
+                break;
+            case 'questionnaire':
+                $questionnaire = get_post_meta($post_id, '_cmb2_qa_group_qa_group', true);
+                echo count($questionnaire);
                 break;
             // Add more cases for additional columns if needed
         }

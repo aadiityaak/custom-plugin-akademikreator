@@ -1,8 +1,11 @@
 .wss-card {
   padding: 5px;
 }
-.wsss-d-flex {
+.wss-d-flex {
   display: flex;
+}
+.wss-position-relative {
+  position: relative;
 }
 .wsss-flex-wrap {
   flex-wrap: wrap;
@@ -10,11 +13,39 @@
 .wss-w-50 {
   width: 50%;
 }
+/* medium md */
+@media (min-width: 768px) {
+  .wss-w-md-25 {
+    width: 25%;
+  }
+}
+.wss-floating-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 3px 9px;
+  font-size: 10px;
+  border-radius: 12px;
+  color: #fff;
+  background-color: #ff4f4f;
+}
 .wss-p-1 {
   padding: 0.7em;
 }
+.wss-pt-1 {
+  padding-top: 0.7em;
+}
 .wss-pl-2 {
   padding-left: 2em;
+}
+.wss-pt-3 {
+  padding-top: 3em;
+}
+.wss-pt-2 {
+  padding-top: 2em;
+}
+.wss-m-1 {
+  margin: 0.7em;
 }
 .wss-mb-2 {
   margin-bottom: 2em;
@@ -27,6 +58,18 @@
 }
 .wss-d-iline-block {
   display: inline-block;
+}
+.wss-align-item-end {
+  -webkit-box-pack: end !important;
+  -ms-flex-pack: end !important;
+  justify-content: flex-end !important;
+}
+.questionnaire-menu a {
+  padding: 10px 15px;
+}
+.questionnaire-menu .menu-item:hover a,
+.questionnaire-menu .current-menu-item a {
+  color: #fff;
 }
 .question-title {
   font-size: 19px;
@@ -77,4 +120,30 @@
 .wss-loading {
   animation: spin 1s linear infinite; /* Ganti dengan durasi atau properti animasi yang sesuai */
 }
-/*# sourceMappingURL=style.min.css.map */
+.wss-container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+.wss-gap-20 {
+  gap: 20px;
+}
+
+.wss-ratio {
+  position: relative;
+  overflow: hidden;
+}
+
+.wss-ratio-3x4::before {
+  content: "";
+  display: block;
+  padding-bottom: calc((3 / 4) * 100%);
+}
+
+.wss-ratio img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

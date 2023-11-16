@@ -147,3 +147,12 @@ function display_content_in_custom_column($value, $column_name, $user_id) {
         return calculate_user_total_score($user_id);
     }
 }
+
+function theme_register_menus() {
+    register_nav_menus(
+        array(
+            'questionnaire-menu' => esc_html__('Questionnaire Menu', 'your-theme-textdomain'), // Lokasi menu baru 'questionnaire'
+        )
+    );
+}
+add_action('after_setup_theme', 'theme_register_menus');
