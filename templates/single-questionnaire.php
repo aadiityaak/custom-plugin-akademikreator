@@ -23,8 +23,7 @@
  } else {
      $magic_elementor_blog_column = 'mg-grid-12';
  }
- 
- get_header();
+
  ?>
  
  
@@ -94,5 +93,3 @@
  </div>
  
  <?php
- get_footer();
- 

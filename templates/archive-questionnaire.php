@@ -12,8 +12,6 @@
 
 $magic_elementor_lite_blog_layout = get_theme_mod('magic_elementor_blog_layout', 'rightside');
 $magic_elementor_lite_blog_style = get_theme_mod('magic_elementor_lite_blog_style', 'grid');
-
-get_header();
 global $post;
 ?>
 
@@ -71,4 +69,3 @@ global $post;
 </div>
 
 <?php
-get_footer();
