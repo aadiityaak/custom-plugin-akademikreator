@@ -162,6 +162,9 @@ function wss_menu_sidebar_courses() {
         <li>
             <a href="?page=for-you">For You</a>
         </li>
+        <li>
+            <a href="?page=questionnaire">Questionnaire</a>
+        </li>
     <?php
 }
 add_action('wss-left-sidebar-courses', 'wss_menu_sidebar_courses');
@@ -172,7 +175,10 @@ function wss_page_courses() {
     if($page == 'for-you') {
         echo 'FYP';
     } else if($page == 'questionnaire') {
-        echo 'FYP';
+        echo wss_questionnaire_page();
+    } else if($page == 'single-questionnaire') {
+        $id = $_GET['id'] ?? '';
+        echo wss_questionnaire_single($id);
     }
 }
 add_action('wss-page-courses', 'wss_page_courses');

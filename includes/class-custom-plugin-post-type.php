@@ -16,7 +16,7 @@
         add_action('init', array($this, 'register_post_types'));
         add_action('init', array($this, 'register_taxonomies')); // Tambahkan hook untuk registrasi taksonomi
         // Hook into the 'template_include' action
-        add_filter('template_include', array($this, 'custom_questionnaire_template'));
+        // add_filter('template_include', array($this, 'custom_questionnaire_template'));
         add_filter('manage_questionnaire_result_posts_columns', array($this, 'add_custom_columns_questionnaire_result'));
         add_action('manage_questionnaire_result_posts_custom_column', array($this, 'display_custom_columns_questionnaire_result'), 10, 2);
 

@@ -143,6 +143,9 @@ class Custom_Plugin {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/custom-function.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'templates/archive-questionnaire.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'templates/single-questionnaire.php';
+
 		$this->loader = new Custom_Plugin_Loader();
 
 	}

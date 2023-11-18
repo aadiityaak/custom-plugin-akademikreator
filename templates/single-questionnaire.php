@@ -10,37 +10,26 @@
  * @subpackage Custom_Plugin/includes
  */
 
- if ('elementor_library' == get_post_type()) {
-     get_template_part('template-parts/elementor', 'template');
-     return;
- }
- 
- 
- $magic_elementor_blog_layout = get_theme_mod('magic_elementor_blog_layout', 'rightside');
- 
- if (is_active_sidebar('sidebar-1') && $magic_elementor_blog_layout != 'fullwidth' && 'post' == get_post_type()) {
-     $magic_elementor_blog_column = 'mg-grid-9';
- } else {
-     $magic_elementor_blog_column = 'mg-grid-12';
- }
+function wss_questionnaire_single($post_id) {
+    ob_start();
+    $magic_elementor_blog_layout = get_theme_mod('magic_elementor_blog_layout', 'rightside');
 
- ?>
- 
- 
- 
- <div class="wss-container mg-main-blog nxsingle-post wss-pt-3">
-     <div class="mg-flex">
-         <?php if (is_active_sidebar('sidebar-1') && $magic_elementor_blog_layout == 'leftside' && 'post' === get_post_type()) : ?>
-             <div class="mg-grid-3">
-                 <?php get_sidebar(); ?>
-             </div>
-         <?php endif; ?>
-         <div class="<?php echo esc_attr($magic_elementor_blog_column); ?>">
-             <main id="primary" class="site-main">
-                 <?php
-                 while (have_posts()) :
-                     the_post();
-                    $post_id = get_the_ID();
+    if (is_active_sidebar('sidebar-1') && $magic_elementor_blog_layout != 'fullwidth' && 'post' == get_post_type()) {
+        $magic_elementor_blog_column = 'mg-grid-9';
+    } else {
+        $magic_elementor_blog_column = 'mg-grid-12';
+    }
+
+    ?>
+
+
+
+    <div class="wss-container mg-main-blog nxsingle-post wss-pt-3">
+        <div class="mg-flex">
+            <div class="<?php echo esc_attr($magic_elementor_blog_column); ?>">
+                <main id="primary" class="site-main">
+                    <?php
+                    
                     $qnas = get_post_meta($post_id, '_cmb2_qa_group_qa_group', true);
                     $options = ['a','b','c','d'];
                     $i = 1;
@@ -78,18 +67,14 @@
                         </button>
                     </form>
                     <?php
- 
-                 endwhile; // End of the loop.
-                 ?>
- 
-             </main><!-- #main -->
-         </div>
-         <?php if (is_active_sidebar('sidebar-1') && $magic_elementor_blog_layout == 'rightside' && 'post' === get_post_type()) : ?>
-             <div class="mg-grid-3">
-                 <?php get_sidebar(); ?>
-             </div>
-         <?php endif; ?>
-     </div>
- </div>
- 
- <?php
+
+                    ?>
+
+                </main><!-- #main -->
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ );?>../public/css/style.min.css">
+    <?php
+    return ob_get_clean();
+}

@@ -10,62 +10,91 @@
  * @subpackage Custom_Plugin/includes
  */
 
-$magic_elementor_lite_blog_layout = get_theme_mod('magic_elementor_blog_layout', 'rightside');
-$magic_elementor_lite_blog_style = get_theme_mod('magic_elementor_lite_blog_style', 'grid');
-global $post;
-?>
+function wss_questionnaire_page(){
+    ob_start();
+    $magic_elementor_lite_blog_layout = get_theme_mod('magic_elementor_blog_layout', 'rightside');
+    $magic_elementor_lite_blog_style = get_theme_mod('magic_elementor_lite_blog_style', 'grid');
+    global $post;
 
-<div class="wss-container mg-main-blog wss-pt-2 wss-mb-2">
-    <main id="primary" class="site-main">
+    $args = array(
+        'post_type'      => 'questionnaire',
+        'posts_per_page' => -1, // Tampilkan semua post type questionnaire
+        // Tambahan argumen lain sesuai kebutuhan
+    );
+    
+    $questionnaire_query = new WP_Query( $args );
+    ?>
+    
 
-        <?php if (have_posts()) : ?>
-            <div class="wss-d-flex wsss-flex-wrap">
-                <?php
-                /* Start the Loop */
-                while (have_posts()) :
-                    the_post();
-                    ?>
-                    
-                    <div class="wss-w-50 wss-w-md-25 wss-position-relative wss-p-1">
-                        <a class="wss-d-block wss-card" href="<?php echo get_the_permalink(); ?>">
-                            <div class="wss-ratio wss-ratio-3x4">
+    <div class="wss-container mg-main-blog wss-pt-2 wss-mb-2">
+        <main id="primary" class="site-main">
+
+            <?php 
+            if ($questionnaire_query->have_posts()) : ?>
+                <div class="columns mpcs-cards">
+                    <?php
+                    /* Start the Loop */
+                    while ($questionnaire_query->have_posts()) :
+                        $questionnaire_query->the_post();
+                        $post_id = $post->ID;
+                        $url = '?page=single-questionnaire&id='.$post_id;
+                        ?>
+                        
+                        <div class="column col-4 col-sm-12">
+                            <div class="card s-rounded">
+                            <div class="card-image">
+                                <a href="<?php echo $url; ?>" class="wss-ratio wss-ratio-3x4" alt="<?php the_title_attribute(); ?>">
                                 <img src="
                                 <?php 
                                 $thumbnail_url = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), array('220','220'), true );
                                 $thumbnail_url = $thumbnail_url[0];
                                 echo $thumbnail_url;
                                 ?>" alt="<?php echo get_the_title(); ?>"/>
+                                </a>
                             </div>
+                            <div class="card-header">
+                                <div class="card-title">
+                                <h2 class="h5"><a href="<?php echo $url; ?>"><?php the_title() ?></a></h2>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <?php the_excerpt() ?>
+                            </div>
+                            <div class="card-footer">
+                                <span class="course-author">
+                                <a href="#"><?php echo get_the_author_ID(); ?></a>
+                                </span>
 
-                            <span class="wss-floating-badge">
-                                <?php 
-                                $first_term_name = get_the_terms( $post->ID, 'category_questionnaire' )[0]->name;
-                                echo $first_term_name ;
-                                ?>
-                            </span>
-                            <h3 class="wss-pt-1">
-                                <?php echo get_the_title(); ?>
-                            </h3>
-                        </a>
-                    </div>
-                    
-                    <?php
+                                <!-- <span class="price float-right">$15.00/m</span> -->
+                                <div class="mpcs-progress-ring" data-value="5" data-color="red">
+                                    <div class="inner">
+                                    <div class="stat">4</div>
+                                    </div>
+                                </div>
 
-                endwhile;
+                            </div>
+                            </div>
+                        </div>
+                        
+                        <?php
 
-                ?>
-            </div>
-        <?php
-            the_posts_pagination();
+                    endwhile;
 
-        else :
+                    ?>
+                </div>
+            <?php
+                the_posts_pagination();
 
-            get_template_part('template-parts/content', 'none');
+            else :
 
-        endif;
-        ?>
+                get_template_part('template-parts/content', 'none');
 
-    </main><!-- #main -->
-</div>
+            endif;
+            ?>
 
-<?php
+        </main><!-- #main -->
+    </div>
+    <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ );?>../public/css/style.min.css">
+    <?php
+    return ob_get_clean();
+}
