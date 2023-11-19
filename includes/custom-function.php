@@ -173,7 +173,7 @@ function wss_page_courses() {
     $page = $_GET['page'] ?? '';
     
     if($page == 'for-you') {
-        echo 'FYP';
+        echo wss_fyp_page();
     } else if($page == 'questionnaire') {
         echo wss_questionnaire_page();
     } else if($page == 'single-questionnaire') {

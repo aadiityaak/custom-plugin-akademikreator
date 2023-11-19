@@ -10,18 +10,17 @@
  * @subpackage Custom_Plugin/includes
  */
 
-function wss_questionnaire_page(){
+function wss_fyp_page(){
     ob_start();
     $magic_elementor_lite_blog_layout = get_theme_mod('magic_elementor_blog_layout', 'rightside');
     $magic_elementor_lite_blog_style = get_theme_mod('magic_elementor_lite_blog_style', 'grid');
     global $post;
     $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 
-
     $args = array(
-        'post_type'      => 'questionnaire',
-        'posts_per_page' => 10,      // Number of posts per page
-        'paged'          => $paged    // Current page number
+        'post_type'      => 'mpcs-course',
+        'paged'          => $paged,    // Current page number
+        'posts_per_page' => 6,      // Number of posts per page
 
         // Tambahan argumen lain sesuai kebutuhan
     );

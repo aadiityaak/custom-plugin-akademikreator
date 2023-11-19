@@ -1,3 +1,341 @@
+/* cssmemberpress */
+hr.solid {
+  border-top: 2px solid #3b4351;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.dc-btn {
+  display: block !important;
+}
+li.ac-role {
+  background: #3333334d;
+  margin: 5px 10px;
+  border-radius: 6px;
+  padding: 10px;
+}
+li.ac-role span {
+  display: block;
+}
+li.ac-role span:before {
+  content: "•";
+}
+.ets-btn {
+  padding: 10px 20px;
+  color: #fff !important;
+  font-size: 13px;
+  box-shadow: 0 0 0 0;
+  border: 0;
+  text-decoration: none;
+  display: block !important;
+  font-weight: 600;
+  letter-spacing: 0.0333em;
+  line-height: 1.25;
+  margin: 0;
+  border-radius: 4px;
+  opacity: 1;
+  text-transform: uppercase;
+  overflow: hidden;
+  min-width: 250px;
+  text-align: center;
+  margin-right: 5px;
+}
+a.ets-btn.btn-disconnect img,
+a.btn-connect.ets-btn img,
+a.memberpress-btn-connect.ets-btn img,
+a.ets-btn img {
+  width: 20px;
+  float: left;
+  display: inline-block;
+  margin-right: 5px;
+}
+.dd-button img {
+  width: 20px;
+  display: inline-block;
+  margin-right: 8px;
+}
+.ets-discord-connection-wrapper {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: flex;
+}
+.discord-dropdown {
+  display: inline-block !important;
+  position: relative;
+  font-size: 16px;
+  font-family: Mulish;
+  font-weight: 600;
+}
+.dd-button {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 6px 60px 6px 15px;
+  background-color: #6a3ad1 !important;
+  cursor: pointer;
+  white-space: nowrap;
+  color: #fff;
+}
+.dd-button:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid white;
+}
+// 			.dd-button:hover {
+// 			  background-color: #d50009;
+// 			}
+.dd-input {
+  display: none;
+}
+.dd-menu {
+  position: absolute;
+  top: 100%;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0 0 8px 0;
+  margin: 3px 0 0 0;
+  background-color: #6a3ad1 !important;
+  font-size: 16px;
+  list-style-type: none;
+  z-index: 99;
+}
+.dd-input + .dd-menu {
+  display: none;
+}
+.dd-input:checked + .dd-menu {
+  display: block;
+}
+.dd-menu li {
+  padding: 5px 20px;
+  white-space: nowrap;
+}
+// 			.dd-menu li:hover {
+// 			  background-color: #FD000A;
+// 			}
+.dd-menu li a {
+  display: block;
+  margin: -10px -20px;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+.dd-menu li.divider {
+  padding: 0;
+  border-bottom: 1px solid #333;
+}
+#mpcs-navbar .navbar-section .navbar-brand img {
+  margin-left: 40px;
+}
+div#toggleSubMenu {
+  margin-right: 40px;
+}
+.mobile-only {
+  display: none;
+}
+.container.grid-xl {
+  max-width: 100%;
+  margin-top: 30px;
+}
+.dropdown {
+  display: inline-block;
+  position: relative;
+  font-size: 16px;
+  font-family: Mulish;
+  font-weight: 600;
+}
+/* 			.btn-connect.ets-btn{
+color: #fff !important;
+}
+.ets-btn {
+padding: 10px 20px;
+color: #fff;
+font-size: 13px;
+box-shadow: 0 0 0 0;
+border: 0;
+text-decoration: none;
+display: block !important;
+font-weight: 600;
+letter-spacing: .0333em;
+line-height: 1.25;
+margin: 0;
+border-radius: 4px;
+opacity: 1;
+text-transform: uppercase;
+overflow: hidden;
+min-width: 235px;
+text-align: center;
+margin-right: 5px;
+}
+a.ets-btn.btn-disconnect img, a.btn-connect.ets-btn img, a.memberpress-btn-connect.ets-btn img, a.ets-btn img {
+width: 20px;
+float: left;
+display: inline-block;
+margin-left: 5px;
+color: #fff !important;
+}
+.ets-discord-connection-wrapper {
+margin-right: 10px;
+margin-bottom: 10px;
+display: flex;
+}
+.discord-dropdown {
+display: inline-block !important;
+position: relative;
+font-size: 16px;
+font-family: Mulish;
+font-weight: 600;
+}
+div.ets-discord-connection-wrapper>label.ets-connection-lbl{
+display: none !important;
+}
+p.ets_assigned_role{
+display: none;
+} */
+.ac-filter-course {
+  width: 20%;
+  color: #fff;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  margin: 0px 20px 40px 0;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.mpcs-course-filter.columns {
+  display: none;
+}
+.mpcs-classroom li a {
+  color: #e7e7e7;
+}
+.mpcs-classroom li.active a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+.dropdown {
+  display: inline-block;
+  position: relative;
+  font-size: 16px;
+  font-family: Mulish;
+  font-weight: 600;
+}
+/* 			.dd-button {
+display: inline-block;
+border-radius: 8px;
+padding: 8px 30px 8px 20px;
+background-color: #FD000A;
+cursor: pointer;
+white-space: nowrap;
+color: #fff;
+}
+
+.dd-button:after {
+content: "";
+position: absolute;
+top: 50%;
+right: 15px;
+transform: translateY(-50%);
+width: 0; 
+height: 0; 
+border-left: 5px solid transparent;
+border-right: 5px solid transparent;
+border-top: 5px solid white;
+}
+.dd-button:hover {
+background-color: #d50009;
+}
+.dd-input {
+display: none;
+}
+.dd-menu {
+position: absolute;
+top: 100%;
+color: #fff;
+border-radius: 8px;
+padding: 0 0 8px 0;
+margin: 3px 0 0 0;
+background-color: #FD000A;
+font-size: 16px;
+list-style-type: none;
+}
+.dd-input + .dd-menu {
+display: none;
+} 
+.dd-input:checked + .dd-menu {
+display: block;
+} 
+.dd-menu li {
+padding: 10px 20px;
+cursor: pointer;
+white-space: nowrap;
+} */
+/* 			.dd-menu li:hover {
+background-color: #d50009;
+} */
+/* 			.dd-menu li a {
+display: block;
+margin: -10px -20px;
+padding: 10px 20px;
+text-decoration: none;
+}
+.dd-menu li.divider{
+padding: 0;
+border-bottom: 1px solid #333;
+} */
+@media only screen and (min-width: 768px) {
+  .mpcs-cards .column.col-4 {
+    width: 32.33333333%;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+  .post-type-archive-mpcs-course .entry-content {
+    margin: 0 auto;
+    max-width: 1400px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  /* 				.ets-btn {
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 13px;
+  box-shadow: 0 0 0 0;
+  border: 0;
+  text-decoration: none;
+  display: block !important;
+  font-weight: 600;
+  letter-spacing: .0333em;
+  line-height: 1.25;
+  margin: 0;
+  border-radius: 4px;
+  opacity: 1;
+  text-transform: uppercase;
+  overflow: hidden;
+  min-width: 103%;
+  text-align: center;
+  margin-right: 5px;
+} */
+  .ac-filter-course {
+    position: absolute;
+    width: 90%;
+    display: block;
+    overflow: hidden;
+    margin-top: -15px;
+  }
+  .container.grid-xl {
+    margin-top: 250px;
+  }
+  .dd-button {
+    display: inline-block;
+    padding: 6px 20px 6px 10px;
+    font-size: 14px;
+  }
+  .dd-button:after {
+    right: 5px;
+  }
+}
+/* css memberpress tutup */
 .wss-card {
   background-color: #191919;
   border-radius: 0 0 10px 10px;
@@ -39,6 +377,9 @@
   border-radius: 12px;
   color: #fff;
   background-color: #ff4f4f;
+}
+.wss-question-frame {
+  color: #bfbfbf;
 }
 .wss-p-1 {
   padding: 0.7em;
@@ -157,4 +498,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.wss-container .nav-links {
+  padding: 0px 20px;
+}
+.wss-container .nav-links .page-numbers {
+  padding: 10px;
 }
