@@ -87,9 +87,8 @@ function save_hasil_questionnaire() {
             $anscheck[$key] = $val;
         }
 
-        $score = get_post_meta($id_questionnaire, '_cmb2_qa_group_score', true);
+        $score_satuan = get_post_meta($id_questionnaire, '_cmb2_qa_group_score', true);
         $qnas = get_post_meta($id_questionnaire, '_cmb2_qa_group_qa_group', true);
-        $score_satuan = $score/count($qnas);
         $hasil = [];
         $i = 1;
         $nilai = [];
@@ -108,7 +107,6 @@ function save_hasil_questionnaire() {
             update_post_meta($post_id, 'id_questionnaire', $id_questionnaire);
             update_post_meta($post_id, 'answer', $ans);
             update_post_meta($post_id, 'score', array_sum($nilai));
-
             // Respond with success message or other relevant data
             echo 'Post inserted successfully with ID: ' . $post_id;
         } else {

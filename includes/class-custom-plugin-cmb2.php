@@ -39,7 +39,8 @@ class Custom_Plugin_CMB2 {
             'name' => esc_html__('Score', 'your-text-domain'),
             'id'   => $prefix . 'score',
             'type' => 'text',
-            'description' => esc_html__('Score yang didapat saat semua jawaban benar', 'your-text-domain'),
+            'default' => 10, // Set nilai default di sini
+            'description' => esc_html__('Score per jawaban benar', 'your-text-domain'),
             // Add any other necessary options here
         ));
 

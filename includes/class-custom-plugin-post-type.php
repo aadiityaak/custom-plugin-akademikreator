@@ -183,8 +183,9 @@
         // Display custom column values
         switch ($column) {
             case 'score':
+                $questionnaire = get_post_meta($post_id, '_cmb2_qa_group_qa_group', true);
                 $score = get_post_meta($post_id, '_cmb2_qa_group_score', true);
-                echo esc_html($score);
+                echo count($questionnaire) * $score;
                 break;
             case 'questionnaire':
                 $questionnaire = get_post_meta($post_id, '_cmb2_qa_group_qa_group', true);

@@ -10,19 +10,28 @@
  * @subpackage Custom_Plugin/includes
  */
 
-function wss_questionnaire_page(){
+function wss_fyp_page(){
     ob_start();
     $magic_elementor_lite_blog_layout = get_theme_mod('magic_elementor_blog_layout', 'rightside');
     $magic_elementor_lite_blog_style = get_theme_mod('magic_elementor_lite_blog_style', 'grid');
     global $post;
     $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+    $user_id = get_current_user_id();
+    $total_score = calculate_user_total_score($user_id);
 
 
     $args = array(
-        'post_type'      => 'questionnaire',
+        'post_type'      => 'modul_video',
         'posts_per_page' => 10,      // Number of posts per page
-        'paged'          => $paged    // Current page number
-
+        'paged'          => $paged,    // Current page number
+        'meta_query' => array(
+            array(
+                'key' => 'score',
+                'value' => $total_score,
+                'compare' => '<=',
+                'type' => 'NUMERIC',
+            ),
+        ),
         // Tambahan argumen lain sesuai kebutuhan
     );
     
@@ -41,8 +50,6 @@ function wss_questionnaire_page(){
                     while ($questionnaire_query->have_posts()) :
                         $questionnaire_query->the_post();
                         $post_id = $post->ID;
-                        $soal = get_post_meta($post_id, '_cmb2_qa_group_qa_group', true);
-                        $score = get_post_meta($post_id, '_cmb2_qa_group_score', true);
                         $url = '?page=single-questionnaire&id='.$post_id;
                         ?>
                         
@@ -68,13 +75,13 @@ function wss_questionnaire_page(){
                             </div>
                             <div class="card-footer">
                                 <span class="course-author">
-                                <a href="#"><?php echo count($soal) * $score; ?></a>
+                                <a href="#"><?php echo get_the_author_ID(); ?></a>
                                 </span>
 
                                 <!-- <span class="price float-right">$15.00/m</span> -->
-                                <div class="mpcs-progress-ring" data-value="<?php echo count($soal);?>" data-color="red">
+                                <div class="mpcs-progress-ring" data-value="5" data-color="red">
                                     <div class="inner">
-                                    <div class="stat"><?php echo rand(0, count($soal));?></div>
+                                    <div class="stat">4</div>
                                     </div>
                                 </div>
 
