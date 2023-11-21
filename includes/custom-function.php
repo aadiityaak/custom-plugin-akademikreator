@@ -177,6 +177,9 @@ function wss_page_courses() {
     } else if($page == 'single-questionnaire') {
         $id = $_GET['id'] ?? '';
         echo wss_questionnaire_single($id);
+    } else if($page == 'single-fyp') {
+        $id = $_GET['id'] ?? '';
+        echo wss_fyp_single($id);
     }
 }
 add_action('wss-page-courses', 'wss_page_courses');

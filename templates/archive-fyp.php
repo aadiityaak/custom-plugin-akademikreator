@@ -22,7 +22,7 @@ function wss_fyp_page(){
 
     $args = array(
         'post_type'      => 'modul_video',
-        'posts_per_page' => 10,      // Number of posts per page
+        'posts_per_page' => 6,      // Number of posts per page
         'paged'          => $paged,    // Current page number
         'meta_query' => array(
             array(
@@ -45,14 +45,15 @@ function wss_fyp_page(){
         <main id="primary" class="site-main">
 
             <?php 
-            if ($questionnaire_query->have_posts()) : ?>
+            if ($questionnaire_query->have_posts()) { ?>
                 <div class="columns mpcs-cards">
                     <?php
                     /* Start the Loop */
                     while ($questionnaire_query->have_posts()) :
                         $questionnaire_query->the_post();
                         $post_id = $post->ID;
-                        $url = '?page=single-questionnaire&id='.$post_id;
+                        $score = get_post_meta($post_id, 'score', true);
+                        $url = '?page=single-fyp&id='.$post_id;
                         ?>
                         
                         <div class="column col-4 col-sm-12">
@@ -77,11 +78,11 @@ function wss_fyp_page(){
                             </div>
                             <div class="card-footer">
                                 <span class="course-author">
-                                <a href="#"><?php echo get_the_author_ID(); ?></a>
+                                <a href="#"><?php echo $score; ?></a>
                                 </span>
 
                                 <!-- <span class="price float-right">$15.00/m</span> -->
-                                <div class="mpcs-progress-ring" data-value="5" data-color="red">
+                                <div class="mpcs-progress-ring" data-value="<?php echo $score/10; ?>" data-color="red">
                                     <div class="inner">
                                     <div class="stat">4</div>
                                     </div>
@@ -98,20 +99,34 @@ function wss_fyp_page(){
                     ?>
                 </div>
             <?php
-                the_posts_pagination();
+                // Pagination
+                $total_pages = $questionnaire_query->max_num_pages;
 
-            else :
+                if ($total_pages > 1) {
+                    $current_page = max(1, get_query_var('paged'));
 
+                    echo '<div class="wss-pagination">';
+                    echo paginate_links(array(
+                        'base'      => get_pagenum_link(1) . '%_%',
+                        'format'    => 'page/%#%',
+                        'current'   => $current_page,
+                        'total'     => $total_pages,
+                        'prev_text' => __('« Prev'),
+                        'next_text' => __('Next »'),
+                    ));
+                    echo '</div>';
+                }
+
+            } else {
                 ?>
-                <div style="text-center">
+                <div style="text-align:center;">
                     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script><lottie-player src="https://lottie.host/37eddff0-50b8-4cae-8ad9-f8533727a3bb/XqytbiWQjx.json" background="##FFFFFF" speed="1" style="width: 300px; height: 300px;margin:0 auto;" loop autoplay direction="1" mode="normal"></lottie-player>
                     <div class="wss-text-light">
                         Konten Tidak Tersedia, coba selesaikan beberapa <a class="wss-btn-warning" href="?page=questionnaire">Questionnaire</a>
                     </div>
                 </div>
                 <?php
-
-            endif;
+            }
             ?>
 
         </main><!-- #main -->

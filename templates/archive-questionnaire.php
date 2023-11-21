@@ -20,7 +20,7 @@ function wss_questionnaire_page(){
 
     $args = array(
         'post_type'      => 'questionnaire',
-        'posts_per_page' => 1,      // Number of posts per page
+        'posts_per_page' => 6,      // Number of posts per page
         'paged'          => $paged    // Current page number
 
         // Tambahan argumen lain sesuai kebutuhan
@@ -34,7 +34,7 @@ function wss_questionnaire_page(){
         <main id="primary" class="site-main">
 
             <?php 
-            if ($questionnaire_query->have_posts()) : ?>
+            if ($questionnaire_query->have_posts()) { ?>
                 <div class="columns mpcs-cards">
                     <?php
                     /* Start the Loop */
@@ -89,13 +89,34 @@ function wss_questionnaire_page(){
                     ?>
                 </div>
             <?php
-                the_posts_pagination();
+                // Pagination
+                $total_pages = $questionnaire_query->max_num_pages;
 
-            else :
+                if ($total_pages > 1) {
+                    $current_page = max(1, get_query_var('paged'));
 
-                get_template_part('template-parts/content', 'none');
+                    echo '<div class="wss-pagination">';
+                    echo paginate_links(array(
+                        'base'      => get_pagenum_link(1) . '%_%',
+                        'format'    => 'page/%#%',
+                        'current'   => $current_page,
+                        'total'     => $total_pages,
+                        'prev_text' => __('« Prev'),
+                        'next_text' => __('Next »'),
+                    ));
+                    echo '</div>';
+                }
 
-            endif;
+            } else {
+                ?>
+                <div style="text-align:center;">
+                    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script><lottie-player src="https://lottie.host/37eddff0-50b8-4cae-8ad9-f8533727a3bb/XqytbiWQjx.json" background="##FFFFFF" speed="1" style="width: 300px; height: 300px;margin:0 auto;" loop autoplay direction="1" mode="normal"></lottie-player>
+                    <div class="wss-text-light">
+                        Questionnaire tidak tersedia :'(
+                    </div>
+                </div>
+                <?php
+            }
             ?>
 
         </main><!-- #main -->
