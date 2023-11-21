@@ -20,7 +20,7 @@ function wss_questionnaire_page(){
 
     $args = array(
         'post_type'      => 'questionnaire',
-        'posts_per_page' => 10,      // Number of posts per page
+        'posts_per_page' => 1,      // Number of posts per page
         'paged'          => $paged    // Current page number
 
         // Tambahan argumen lain sesuai kebutuhan

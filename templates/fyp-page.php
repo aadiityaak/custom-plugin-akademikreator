@@ -90,7 +90,11 @@ function wss_fyp_page(){
 
             else :
 
-                get_template_part('template-parts/content', 'none');
+                ?>
+                <div style="text-center">
+                    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script><lottie-player src="https://lottie.host/1bdea896-5213-481a-95c2-7fc115a5dbf4/LBiUESn3sp.json" background="##FFFFFF" speed="1" style="width: 300px; height: 300px" loop autoplay direction="1" mode="normal"></lottie-player>
+                </div>
+                <?php
 
             endif;
             ?>

@@ -86,9 +86,20 @@ a.ets-btn img {
   border-right: 5px solid transparent;
   border-top: 5px solid white;
 }
-// 			.dd-button:hover {
-// 			  background-color: #d50009;
-// 			}
+.dd-button:hover {
+  background-color: #d50009;
+}
+a.wss-btn-warning,
+.wss-btn-warning {
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: none;
+  background-color: #ff4f4f;
+  color: #fff;
+}
+.wss-btn-warning:hover {
+  background-color: #333333;
+}
 .dd-input {
   display: none;
 }
@@ -114,9 +125,6 @@ a.ets-btn img {
   padding: 5px 20px;
   white-space: nowrap;
 }
-// 			.dd-menu li:hover {
-// 			  background-color: #FD000A;
-// 			}
 .dd-menu li a {
   display: block;
   margin: -10px -20px;
@@ -475,6 +483,9 @@ border-bottom: 1px solid #333;
 .wss-container {
   max-width: 1140px;
   margin: 0 auto;
+}
+.wss-text-light {
+  color: #bfbfbf;
 }
 .wss-gap-20 {
   gap: 20px;

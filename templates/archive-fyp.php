@@ -32,6 +32,8 @@ function wss_fyp_page(){
                 'type' => 'NUMERIC',
             ),
         ),
+        'orderby' => 'meta_value_num',  // Menyortir berdasarkan nilai numerik
+        'meta_key' => 'score',          // Menggunakan kolom 'score' sebagai basis pengurutan
         // Tambahan argumen lain sesuai kebutuhan
     );
     
@@ -100,7 +102,14 @@ function wss_fyp_page(){
 
             else :
 
-                get_template_part('template-parts/content', 'none');
+                ?>
+                <div style="text-center">
+                    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script><lottie-player src="https://lottie.host/37eddff0-50b8-4cae-8ad9-f8533727a3bb/XqytbiWQjx.json" background="##FFFFFF" speed="1" style="width: 300px; height: 300px;margin:0 auto;" loop autoplay direction="1" mode="normal"></lottie-player>
+                    <div class="wss-text-light">
+                        Konten Tidak Tersedia, coba selesaikan beberapa <a class="wss-btn-warning" href="?page=questionnaire">Questionnaire</a>
+                    </div>
+                </div>
+                <?php
 
             endif;
             ?>
