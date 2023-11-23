@@ -10,14 +10,20 @@ add_shortcode('total_score', 'total_score_shortcode');
 
 // Function to calculate the total score
 function calculate_user_total_score($user_id) {
+    $selected_questionnaire = get_option('selected_questionnaire');
     // Query arguments
     $args = array(
         'post_type'      => 'questionnaire_result',
         'posts_per_page' => -1,
         'meta_query'     => array(
+            'relation' => 'AND', // Menambahkan operator logika AND di antara klausa-klausa
             array(
                 'key'   => 'id_member',
                 'value' => $user_id,
+            ),
+            array(
+                'key'   => 'id_questionnaire',
+                'value' => $selected_questionnaire,
             ),
         ),
     );

@@ -156,14 +156,15 @@ function theme_register_menus() {
 add_action('after_setup_theme', 'theme_register_menus');
 
 function wss_menu_sidebar_courses() {
+    $user_id = get_current_user_id();
+    $total_score = calculate_user_total_score($user_id);
+    if($total_score >= 1){
     ?>
         <li>
             <a href="?page=for-you">For You</a>
         </li>
-        <li>
-            <a href="?page=questionnaire">Questionnaire</a>
-        </li>
     <?php
+    }
 }
 add_action('wss-left-sidebar-courses', 'wss_menu_sidebar_courses');
 
@@ -177,9 +178,108 @@ function wss_page_courses() {
     } else if($page == 'single-questionnaire') {
         $id = $_GET['id'] ?? '';
         echo wss_questionnaire_single($id);
+        ?>
+        <style>
+            .ac-filter-course {
+                display: none !important;
+            }
+        </style>
+        <?php
     } else if($page == 'single-fyp') {
         $id = $_GET['id'] ?? '';
         echo wss_fyp_single($id);
     }
 }
 add_action('wss-page-courses', 'wss_page_courses');
+
+function tambah_submenu_questionnaire() {
+    add_submenu_page(
+        'edit.php?post_type=questionnaire', // menu utama
+        'Floating Questionnaire', // judul submenu
+        'Floating Questionnaire', // teks menu
+        'manage_options', // capability yang diperlukan untuk mengakses
+        'pilih_questionnaire', // slug menu
+        'tampilkan_form_pilih_questionnaire' // fungsi yang menampilkan kontennya
+    );
+}
+add_action('admin_menu', 'tambah_submenu_questionnaire');
+
+// Fungsi untuk menampilkan konten submenu
+function tampilkan_form_pilih_questionnaire() {
+    ?>
+    <div class="wrap">
+        <h2>Pilih Questionnaire</h2>
+        <form method="post" action="">
+            <label for="select_questionnaire">Pilih Questionnaire:</label>
+            <select name="select_questionnaire" id="select_questionnaire">
+                <option>-</option>
+                <?php
+                // Ambil daftar questionnaire dari database
+                $questionnaires = get_posts(array('post_type' => 'questionnaire', 'posts_per_page' => -1));
+                
+                foreach ($questionnaires as $questionnaire) {
+                    $selected = (get_option('selected_questionnaire') == $questionnaire->ID) ? 'selected' : '';
+                    echo '<option value="' . $questionnaire->ID . '" '.$selected.'>' . $questionnaire->post_title . '</option>';
+                }
+                ?>
+            </select>
+            <br>
+            <input type="submit" name="save_questionnaire" class="button button-primary" value="Save">
+        </form>
+    </div>
+    <?php
+}
+
+// Tanggapi saat formulir disubmit
+function proses_form_pilih_questionnaire() {
+    if (isset($_POST['save_questionnaire'])) {
+        $selected_questionnaire_id = $_POST['select_questionnaire'];
+
+        // Lakukan apa yang perlu Anda lakukan dengan questionnaire yang dipilih, misalnya menyimpan di pengaturan
+        update_option('selected_questionnaire', $selected_questionnaire_id);
+
+        // Tambahkan pesan sukses
+        add_action('admin_notices', function () {
+            echo '<div class="notice notice-success is-dismissible"><p>Questionnaire berhasil disimpan!</p></div>';
+        });
+    }
+}
+add_action('admin_init', 'proses_form_pilih_questionnaire');
+
+
+function questionnaire_notice() {
+    $id_floating = get_option('selected_questionnaire');
+    $page = $_GET['page'] ?? '';
+?>
+    <div class="wss-container" >
+        <div class="wss-notice" id="questionnaire-notice">
+            <p>
+                <?php 
+                if($page == 'single-questionnaire'){ ?>
+                    <a href="?">
+                        <svg style="top:-2px;position:relative;" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                        </svg> Courses
+                    </a>
+                <?php
+                } else {
+                ?>
+                <a href="?page=single-questionnaire&id=<?php echo $id_floating; ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-check" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+                </svg>
+                Questionnaire: <?php echo get_the_title($id_floating); ?>
+                </a>
+                <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ );?>../public/css/style.min.css">
+                <?php
+                }
+                ?>
+            </p>
+            <!-- <a class="wss-close-button" onclick="tutupNotice()">X</a> -->
+        </div>
+    </div>
+<?php
+}
+add_action('top-courses', 'questionnaire_notice');

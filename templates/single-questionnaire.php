@@ -19,12 +19,9 @@ function wss_questionnaire_single($post_id) {
     } else {
         $magic_elementor_blog_column = 'mg-grid-12';
     }
-
     ?>
 
-
-
-    <div class="wss-container mg-main-blog nxsingle-post wss-pt-3">
+    <div class="wss-container mg-main-blog nxsingle-post">
         <div class="mg-flex">
             <div class="<?php echo esc_attr($magic_elementor_blog_column); ?>">
                 <main id="primary" class="site-main">
