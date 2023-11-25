@@ -24,37 +24,6 @@ class Custom_Plugin_Meta_Box {
         $prefix = '';
 
         $meta_boxes[] = array(
-            'title'      => esc_html__('Hasil', 'online-generator'),
-            'id'         => 'untitled',
-            'post_types' => array('questionnaire_result'),
-            'context'    => 'normal',
-            'fields'     => array(
-                array(
-                    'type' => 'user',
-                    'name' => esc_html__('ID Member', 'online-generator'),
-                    'id'   => $prefix . 'id_member',
-                ),
-                array(
-                    'type' => 'post',
-                    'name' => esc_html__('ID Questionnaire', 'online-generator'),
-                    'id'   => 'id_questionnaire',
-                    'post_type'  => 'questionnaire',
-                    'field_type' => 'select_advanced',
-                ),
-                array(
-                    'type' => 'text',
-                    'name' => esc_html__('Score', 'online-generator'),
-                    'id'   => $prefix . 'score',
-                ),
-                array(
-                    'type' => 'key_value',
-                    'name' => esc_html__('Jawaban', 'online-generator'),
-                    'id'   => 'answer',
-                ),
-            ),
-        );
-
-        $meta_boxes[] = array(
             'title'      => esc_html__('Data Modul', 'online-generator'),
             'id'         => 'untitled',
             'post_types' => array('modul_video'),

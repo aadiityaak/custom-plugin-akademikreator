@@ -77,19 +77,23 @@ class Custom_Plugin_CMB2 {
             'id'   => $prefix . 'condition',
             'description' => esc_html__('Centang jika ingin pertanyaan ini ditampilkan jika kondisi tertentu', 'your-text-domain'),
             'type' => 'checkbox',
+            'classes'    => 'parent-condition', // Extra cmb2-wrap classes
         ));
 
         $cmb->add_group_field($group_field_id, array(
             'name' => esc_html__('Nomor Pertanyaan', 'your-text-domain'),
             'id'   => $prefix . 'number_question',
             'type' => 'text',
-            'before'=> 'Isi dengan nomor urut pertanyaan.',
+            'after'=> 'Isi dengan nomor urut pertanyaan.',
+            'classes'    => 'if-condition', // Extra cmb2-wrap classes
+
         ));
         $cmb->add_group_field($group_field_id, array(
             'name' => esc_html__('Jawaban', 'your-text-domain'),
             'id'   => $prefix . 'and_answer',
             'type' => 'text',
             'repeatable' => true,
+            'classes'    => 'if-condition', // Extra cmb2-wrap classes
         ));
     }
     

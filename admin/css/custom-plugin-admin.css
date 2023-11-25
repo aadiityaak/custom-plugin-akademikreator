@@ -2,3 +2,6 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+.cmb-repeat-table input {
+  padding-left: 37px;
+}
