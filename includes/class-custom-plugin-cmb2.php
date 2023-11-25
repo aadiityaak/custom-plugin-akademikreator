@@ -35,14 +35,14 @@ class Custom_Plugin_CMB2 {
             'object_types' => array('questionnaire'), // Sesuaikan dengan jenis pos yang ingin Anda tambahkan metabox ini.
         ));
 
-        $cmb->add_field(array(
-            'name' => esc_html__('Score', 'your-text-domain'),
-            'id'   => $prefix . 'score',
-            'type' => 'text',
-            'default' => 10, // Set nilai default di sini
-            'description' => esc_html__('Score per jawaban benar', 'your-text-domain'),
-            // Add any other necessary options here
-        ));
+        // $cmb->add_field(array(
+        //     'name' => esc_html__('Score', 'your-text-domain'),
+        //     'id'   => $prefix . 'score',
+        //     'type' => 'text',
+        //     'default' => 10, // Set nilai default di sini
+        //     'description' => esc_html__('Score per jawaban benar', 'your-text-domain'),
+        //     // Add any other necessary options here
+        // ));
 
         $group_field_id = $cmb->add_field(array(
             'id'          => $prefix . 'qa_group',
@@ -66,41 +66,30 @@ class Custom_Plugin_CMB2 {
         ));
 
         $cmb->add_group_field($group_field_id, array(
-            'name' => esc_html__('A', 'your-text-domain'),
-            'id'   => $prefix . 'answer_a',
+            'name' => esc_html__('Jawaban', 'your-text-domain'),
+            'id'   => $prefix . 'answer',
             'type' => 'text',
+            'repeatable' => true,
         ));
 
         $cmb->add_group_field($group_field_id, array(
-            'name' => esc_html__('B', 'your-text-domain'),
-            'id'   => $prefix . 'answer_b',
-            'type' => 'text',
+            'name' => esc_html__('Condition', 'your-text-domain'),
+            'id'   => $prefix . 'condition',
+            'description' => esc_html__('Centang jika ingin pertanyaan ini ditampilkan jika kondisi tertentu', 'your-text-domain'),
+            'type' => 'checkbox',
         ));
 
         $cmb->add_group_field($group_field_id, array(
-            'name' => esc_html__('C', 'your-text-domain'),
-            'id'   => $prefix . 'answer_c',
+            'name' => esc_html__('Nomor Pertanyaan', 'your-text-domain'),
+            'id'   => $prefix . 'number_question',
             'type' => 'text',
+            'before'=> 'Isi dengan nomor urut pertanyaan.',
         ));
-
         $cmb->add_group_field($group_field_id, array(
-            'name' => esc_html__('D', 'your-text-domain'),
-            'id'   => $prefix . 'answer_d',
+            'name' => esc_html__('Jawaban', 'your-text-domain'),
+            'id'   => $prefix . 'and_answer',
             'type' => 'text',
-        ));
-
-        // Field untuk memilih jawaban yang benar
-        $cmb->add_group_field($group_field_id, array(
-            'name'    => esc_html__('Jawaban Benar', 'your-text-domain'),
-            'id'      => $prefix . 'correct_answer',
-            'type'    => 'select',
-            'options' => array(
-                'a' => 'A',
-                'b' => 'B',
-                'c' => 'C',
-                'd' => 'D',
-            ),
-            'display_cb' => array($this, 'display_correct_answer_field'), // Metode untuk menampilkan field.
+            'repeatable' => true,
         ));
     }
     
