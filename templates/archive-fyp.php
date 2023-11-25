@@ -17,19 +17,23 @@ function wss_fyp_page(){
     global $post;
     $paged = get_query_var('paged') ? get_query_var('paged') : 1;
     $user_id = get_current_user_id();
-    $total_score = calculate_user_total_score($user_id);
-
+    $id_floating = get_option('selected_questionnaire');
 
     $args = array(
         'post_type'      => 'modul_video',
         'posts_per_page' => 6,      // Number of posts per page
         'paged'          => $paged,    // Current page number
-        'meta_query' => array(
+        'meta_query'     => array(
+            'relation' => 'AND',
             array(
-                'key' => 'score',
-                'value' => $total_score,
-                'compare' => '<=',
-                'type' => 'NUMERIC',
+                'key'   => 'id_member',
+                'value' => $user_id,
+                'compare' => '=',
+            ),
+            array(
+                'key'   => 'id_questionnaire',
+                'value' => $id_floating,
+                'compare' => '=',
             ),
         ),
         'orderby' => 'meta_value_num',  // Menyortir berdasarkan nilai numerik
@@ -122,7 +126,7 @@ function wss_fyp_page(){
                 <div style="text-align:center;">
                     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script><lottie-player src="https://lottie.host/37eddff0-50b8-4cae-8ad9-f8533727a3bb/XqytbiWQjx.json" background="##FFFFFF" speed="1" style="width: 300px; height: 300px;margin:0 auto;" loop autoplay direction="1" mode="normal"></lottie-player>
                     <div class="wss-text-light">
-                        Konten Tidak Tersedia, coba selesaikan beberapa <a class="wss-btn-warning" href="?page=questionnaire">Questionnaire</a>
+                        <a class="wss-btn-warning" href="<?php echo '?page=single-questionnaire&id='.$id_floating;?>">Selesaikan Questionnaire</a>
                     </div>
                 </div>
                 <?php

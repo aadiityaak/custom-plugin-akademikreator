@@ -29,16 +29,127 @@ function cmb2_missing_notice() {
     <?php
 }
 
+// Fungsi untuk menangani AJAX request
+function save_hasil_questionnaire() {
+    // Check if the request is a POST request and has the required data
+    if (isset($_POST['formData']) && is_array($_POST['formData'])) {
+        // Perform necessary data manipulation
+        $formData = $_POST['formData'] ?? [];
+        $id_questionnaire = key($formData); // Use key() to get the first key
+        $id_member = get_current_user_id();
+
+        // Define post data
+        $new_post = array(
+            'post_title'    => '#' . rand(1111111, 9999999) . date('U'),
+            'post_status'   => 'publish',
+            'post_type'     => 'questionnaire_result',
+        );
+
+        $args = array(
+            'post_type'      => 'questionnaire_result',
+            'posts_per_page' => 1, // Only retrieve one post
+            'meta_query'     => array(
+                'relation' => 'AND',
+                array(
+                    'key'   => 'id_member',
+                    'value' => $id_member,
+                ),
+                array(
+                    'key'   => 'id_questionnaire',
+                    'value' => $id_questionnaire,
+                ),
+            ),
+        );
+        
+        // Create a new WP_Query instance
+        $query = new WP_Query($args);
+        
+        // Check if there are posts found
+        if ($query->have_posts()) {
+            // Loop through the posts
+            while ($query->have_posts()) {
+                $query->the_post();
+                // Get the post ID
+                $post_id = get_the_ID();
+            }
+            // Reset post data
+            wp_reset_postdata();
+        } else {
+            // Insert the post into the database
+            $post_id = wp_insert_post($new_post);
+        }
+
+
+        // Save answers
+        $ans = $anscheck = [];
+        foreach ($formData[$id_questionnaire] as $key => $val) {
+            $ans[$key] = [$key, $val];
+            $anscheck[$key] = $val;
+        }
+
+        $score_satuan = get_post_meta($id_questionnaire, '_cmb2_qa_group_score', true);
+        $qnas = get_post_meta($id_questionnaire, '_cmb2_qa_group_qa_group', true);
+
+        // Check if the post was inserted successfully
+        if (!is_wp_error($post_id)) {
+            // Update post meta with questionnaire results
+            update_post_meta($post_id, 'id_member', $id_member);
+            update_post_meta($post_id, 'id_questionnaire', $id_questionnaire);
+            update_post_meta($post_id, 'answer', $ans);
+            // Respond with success message or other relevant data
+            echo 'Post inserted successfully with ID: ' . $post_id;
+        } else {
+            // Respond with an error message
+            echo 'Error inserting post: ' . $post_id->get_error_message();
+        }
+    } else {
+        // If data is incomplete, respond with an error
+        echo 'Error: Data tidak lengkap';
+    }
+
+    // Important: Always exit the AJAX process
+    exit();
+}
+
+// Daftarkan fungsi di WordPress untuk AJAX request
+add_action('wp_ajax_update_hasil_questionnaire', 'save_hasil_questionnaire');
+// add_action('wp_ajax_nopriv_update_hasil_questionnaire', 'save_hasil_questionnaire');
+
 function wss_menu_sidebar_courses() {
     $user_id = get_current_user_id();
-    $total_score = calculate_user_total_score($user_id);
-    if($total_score >= 1){
-    ?>
-        <li>
-            <a href="?page=for-you">For You</a>
-        </li>
-    <?php
+    $id_floating = get_option('selected_questionnaire');
+    $args = array(
+        'post_type'      => 'questionnaire_result', // Ganti dengan jenis posting Anda
+        'posts_per_page' => 1, // Jumlah posting yang ingin diambil
+        'meta_query'     => array(
+            'relation' => 'AND',
+            array(
+                'key'   => 'id_member',
+                'value' => $user_id,
+                'compare' => '=',
+            ),
+            array(
+                'key'   => 'id_questionnaire',
+                'value' => $id_floating,
+                'compare' => '=',
+            ),
+        ),
+    );
+    
+    $query = new WP_Query($args);
+    
+    if ($query->have_posts()) {
+        $count = $query->found_posts;
+        if($count >= 1){
+            ?>
+            <li>
+                <a href="?page=for-you">For You</a>
+            </li>
+            <?php
+        }
+        wp_reset_postdata(); // Reset global post data
     }
+
 }
 add_action('wss-left-sidebar-courses', 'wss_menu_sidebar_courses');
 
