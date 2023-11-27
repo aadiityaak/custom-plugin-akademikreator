@@ -129,7 +129,13 @@ class Custom_Plugin_CMB2 {
             'type' => 'multicheck',
             'show_option_none' => true,
             'options_cb' => 'get_mpcs_course_options', // Fungsi yang akan menghasilkan daftar post
-            // 'classes' => 'your-class', // Ganti dengan kelas CSS yang diinginkan
+            'classes' => 'list-order', // Ganti dengan kelas CSS yang diinginkan
+        ));
+        $cmb->add_group_field($group_penentu, array(
+            'name' => 'Urutan Post',
+            'id'   => 'urutan_post_field',
+            'type' => 'text', // Ganti dengan 'hidden' jika ingin tersembunyi
+            'classes' => 'order-fyp', // Ganti dengan kelas CSS yang diinginkan
         ));
     }
     
@@ -155,9 +161,14 @@ function get_mpcs_course_options() {
 
     // Ganti 'mpcs-course' dengan nama post type yang sesuai
     $post_type = 'mpcs-course';
+
+    // Query untuk mendapatkan post ID, post title, dan urutan (jika tersedia)
+    $query = "SELECT ID, post_title, meta_value
+              FROM $wpdb->posts
+              LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = 'urutan_post_field') 
+              WHERE post_type = %s AND post_status = 'publish'
+              ORDER BY CAST(meta_value AS UNSIGNED), post_title";
     
-    // Query untuk mendapatkan post ID dan post title
-    $query = "SELECT ID, post_title FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish'";
     $results = $wpdb->get_results($wpdb->prepare($query, $post_type));
     
     // Cek apakah terdapat hasil
