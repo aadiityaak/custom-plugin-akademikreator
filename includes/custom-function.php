@@ -268,3 +268,11 @@ function questionnaire_notice() {
 <?php
 }
 add_action('top-courses', 'questionnaire_notice');
+
+// Fungsi untuk menambahkan menu "Courses Menu"
+function add_courses_menu() {
+    register_nav_menu('courses-menu', __('Courses Menu'));
+}
+
+// Panggil fungsi saat tema diaktifkan
+add_action('after_setup_theme', 'add_courses_menu');
