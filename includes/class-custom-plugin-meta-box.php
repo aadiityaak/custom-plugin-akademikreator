@@ -49,26 +49,6 @@ class Custom_Plugin_Meta_Box {
             ),
         );
 
-        $meta_boxes[] = array(
-            'title'      => esc_html__('Data Modul', 'online-generator'),
-            'id'         => 'untitled',
-            'post_types' => array('modul_video'),
-            'context'    => 'normal',
-            'fields'     => array(
-                array(
-                    'type' => 'oembed',
-                    'name' => esc_html__('Modul', 'online-generator'),
-                    'id'   => $prefix . 'url_modul',
-                ),
-                array(
-                    'type' => 'text',
-                    'name' => esc_html__('Score', 'online-generator'),
-                    'desc' => 'Score minimal untuk melihat modul ini.',
-                    'id'   => $prefix . 'score',
-                ),
-            ),
-        );
-
         return $meta_boxes;
     }
 
