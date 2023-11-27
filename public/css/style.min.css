@@ -555,7 +555,12 @@ border-bottom: 1px solid #333;
 .wss-gap-20 {
   gap: 20px;
 }
-
+.wss-title {
+  background: #fff;
+  color: #333;
+  border-radius: 3px;
+  border-left: 4px solid #333;
+}
 .wss-ratio {
   position: relative;
   overflow: hidden;

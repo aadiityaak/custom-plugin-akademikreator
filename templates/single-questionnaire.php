@@ -12,6 +12,7 @@
 
 function wss_questionnaire_single($post_id) {
     ob_start();
+
     global $post;
     $magic_elementor_blog_layout = get_theme_mod('magic_elementor_blog_layout', 'rightside');
 
@@ -77,21 +78,20 @@ function wss_questionnaire_single($post_id) {
                         // Convert seconds to a human-readable format
                         $duration = human_time_diff($registration_timestamp, $current_timestamp);
 
-                        // echo 'User registered on: ' . date('F j, Y', $registration_timestamp) . '<br>';
-                        // echo 'Duration: ' . $duration;
                     }
                     ?>
                     <form class="questionnaire-frame wss-mb-2" data-id="<?php echo $post_id; ?>">
                         <div class="wss-card wss-question-frame wss-mb-2">
-                            <h2 class="wss-title wss-p-1"><b><?php echo $display_name;?></b> (<?php echo $duration;?>)</h2>
+                            <h2 class="wss-title wss-p-1"><b><?php echo $display_name;?></b> (Join <?php echo $duration;?>)</h2>
                         </div>
                         <?php
                         foreach($qnas as $qna){
                             $j = $i++;
+                            $terjawab = $result_meta['qna_'.$post_id.$j][1];
                             // echo '<pre>';
                             //     print_r($qna);
                             // echo '</pre>';
-                            $condition = $qna['_cmb2_qa_group_condition'] ? 'wss-d-none' : '';
+                            $condition = ($qna['_cmb2_qa_group_condition'] && !$terjawab) ? 'wss-d-none' : '';
                             $condition_key = $qna['_cmb2_qa_group_number_question'] ?? '';
                             $condition_val = $qna['_cmb2_qa_group_and_answer'] ? implode(' ',$qna['_cmb2_qa_group_and_answer']) : '';
                             ?>
