@@ -86,14 +86,50 @@ class Custom_Plugin_CMB2 {
             'type' => 'text',
             'after'=> 'Isi dengan nomor urut pertanyaan.',
             'classes'    => 'if-condition', // Extra cmb2-wrap classes
-
         ));
+
         $cmb->add_group_field($group_field_id, array(
             'name' => esc_html__('Jawaban', 'your-text-domain'),
             'id'   => $prefix . 'and_answer',
             'type' => 'text',
             'repeatable' => true,
             'classes'    => 'if-condition', // Extra cmb2-wrap classes
+        ));
+
+
+        $group_penentu = $cmb->add_field(array(
+            'id'          => $prefix . 'courses',
+            'type'        => 'group',
+            // 'description' => esc_html__('Tambah pertanyaan dan jawaban', 'your-text-domain'),
+            'options'     => array(
+                'group_title'   => esc_html__('Kondisi {#}', 'your-text-domain'),
+                'add_button'    => esc_html__('Tambah Kondisi', 'your-text-domain'),
+                'remove_button' => esc_html__('Hapus Kondisi', 'your-text-domain'),
+                'sortable'      => true,
+            ),
+        ));
+
+        $cmb->add_group_field($group_penentu, array(
+            'name' => esc_html__('Nomor Pertanyaan', 'your-text-domain'),
+            'id'   => $prefix . 'number_question',
+            'type' => 'text',
+            'after'=> 'Isi dengan nomor urut pertanyaan.',
+        ));
+
+        $cmb->add_group_field($group_penentu, array(
+            'name' => esc_html__('Jawaban', 'your-text-domain'),
+            'id'   => $prefix . 'and_answer',
+            'type' => 'text',
+            // 'repeatable' => true,
+        ));
+        // Ganti 'your-text-domain' dengan domain teks tema atau plugin Anda
+        $cmb->add_group_field($group_penentu, array(
+            'name' => esc_html__('Pilih Post', 'your-text-domain'),
+            'id'   => $prefix . 'selected_post',
+            'type' => 'multicheck',
+            'show_option_none' => true,
+            'options_cb' => 'get_mpcs_course_options', // Fungsi yang akan menghasilkan daftar post
+            // 'classes' => 'your-class', // Ganti dengan kelas CSS yang diinginkan
         ));
     }
     
@@ -111,3 +147,26 @@ class Custom_Plugin_CMB2 {
 
 // Inisialisasi class
 $custom_plugin_cmb2 = new Custom_Plugin_CMB2();
+// Fungsi untuk menghasilkan daftar post
+function get_mpcs_course_options() {
+    $post_options = array();
+
+    global $wpdb;
+
+    // Ganti 'mpcs-course' dengan nama post type yang sesuai
+    $post_type = 'mpcs-course';
+    
+    // Query untuk mendapatkan post ID dan post title
+    $query = "SELECT ID, post_title FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish'";
+    $results = $wpdb->get_results($wpdb->prepare($query, $post_type));
+    
+    // Cek apakah terdapat hasil
+    if ($results) {
+        foreach ($results as $result) {
+            $post_id = $result->ID;
+            $post_title = $result->post_title;
+            $post_options[$post_id] = $post_title;
+        }
+    }
+    return $post_options;
+}

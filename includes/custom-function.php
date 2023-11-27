@@ -83,7 +83,7 @@ function save_hasil_questionnaire() {
         // Save answers
         $ans = $anscheck = [];
         foreach ($formData[$id_questionnaire] as $key => $val) {
-            $ans[$key] = [$key, $val];
+            $ans[$key] = [$key, $val, $id_questionnaire];
             $anscheck[$key] = $val;
         }
 
@@ -137,13 +137,13 @@ function wss_menu_sidebar_courses() {
     );
     
     $query = new WP_Query($args);
-    
+    $active = (isset($_GET['page']) && $_GET['page'] == 'for-you') ? 'active' : '';
     if ($query->have_posts()) {
         $count = $query->found_posts;
         if($count >= 1){
             ?>
             <li>
-                <a href="?page=for-you">For You</a>
+                <a class="<?php echo $active; ?>" href="?page=for-you">For You</a>
             </li>
             <?php
         }
@@ -268,3 +268,81 @@ function questionnaire_notice() {
 <?php
 }
 add_action('top-courses', 'questionnaire_notice');
+
+
+
+function list_fyp(){
+    // fungsi FYP
+    global $post;
+    $user_id = get_current_user_id();
+    $id_floating = get_option('selected_questionnaire');
+    $args = array(
+        'post_type'      => 'questionnaire_result', // Ganti dengan jenis posting Anda
+        'posts_per_page' => 1, // Jumlah posting yang ingin diambil
+        'meta_query'     => array(
+            'relation' => 'AND',
+            array(
+                'key'   => 'id_member',
+                'value' => $user_id,
+                'compare' => '=',
+            ),
+            array(
+                'key'   => 'id_questionnaire',
+                'value' => $id_floating,
+                'compare' => '=',
+            ),
+        ),
+    );
+
+    $query_questionnaire_result = new WP_Query($args);
+    $result_meta = [];
+    if ($query_questionnaire_result->have_posts()) {
+        // Ada posting yang sesuai dengan kriteria
+        while ($query_questionnaire_result->have_posts()) {
+            $query_questionnaire_result->the_post();
+            $result_metas = get_post_meta($post->ID, 'answer', true);
+            // print_r($result_metas);
+            foreach($result_metas as $data){
+                $id = $data[0] ?? '';
+                $id = str_replace('qna_','', $id);
+                $id = str_replace($data[2],'', $id);
+                $jawab = $data[1] ?? '';
+                $result_meta[$id] = $jawab;
+            }
+        }
+        wp_reset_postdata(); // Reset global post data
+    }
+
+    $kunci_queries = get_post_meta($id_floating, '_cmb2_qa_group_courses', true);
+    $kunci_query =[];
+    foreach($kunci_queries as $data){
+        $id_question = $data['_cmb2_qa_group_number_question'];
+        $jawab_question = $data['_cmb2_qa_group_and_answer'];
+        $kunci_query[$id_question][$jawab_question][] = $data['_cmb2_qa_group_selected_post'];
+    }
+    $id = $kunci_query[$id][$jawab] ?? [];
+    return $id;
+}
+
+// function custom_archive_query($query) {
+//     if (is_archive() && $query->is_main_query() && isset($_GET['page']) && $_GET['page'] == 'for-you') {
+//         // Daftar post ID yang diinginkan
+//         $post_ids = list_fyp();
+
+//         // Extract the inner array containing the post IDs
+//         $post_ids = reset($post_ids);
+//         $post_ids = array_map('intval', $post_ids);
+
+//         if($post_ids){
+//             // Set argument untuk WP_Query
+//             $query->set('posts_per_page', '6');
+//             $query->set('post__in', $post_ids);
+//             $query->set('orderby', 'post__in');
+//             echo '<pre>';
+//             print_r($query);
+//             echo '</pre>';
+//         }
+//     }
+// }
+// // Hook fungsi di atas ke pre_get_posts
+// add_action('pre_get_posts', 'custom_archive_query');
