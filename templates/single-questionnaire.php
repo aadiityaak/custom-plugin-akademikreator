@@ -78,8 +78,6 @@ function wss_questionnaire_single($post_id) {
                         // Convert seconds to a human-readable format
                         $duration = human_time_diff($registration_timestamp, $current_timestamp);
 
-                        // echo 'User registered on: ' . date('F j, Y', $registration_timestamp) . '<br>';
-                        // echo 'Duration: ' . $duration;
                     }
                     ?>
                     <form class="questionnaire-frame wss-mb-2" data-id="<?php echo $post_id; ?>">

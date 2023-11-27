@@ -324,6 +324,15 @@ function list_fyp(){
     return $id;
 }
 
+function theme_register_menus() {
+    register_nav_menus(
+        array(
+            'questionnaire-menu' => esc_html__('Questionnaire Menu', 'your-theme-textdomain'), // Lokasi menu baru 'questionnaire'
+        )
+    );
+}
+add_action('after_setup_theme', 'theme_register_menus');
+
 // function custom_archive_query($query) {
 //     if (is_archive() && $query->is_main_query() && isset($_GET['page']) && $_GET['page'] == 'for-you') {
 //         // Daftar post ID yang diinginkan
