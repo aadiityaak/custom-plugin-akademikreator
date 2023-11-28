@@ -238,7 +238,7 @@ function questionnaire_notice() {
 ?>
     <div class="wss-container" >
         <div class="wss-notice" id="questionnaire-notice">
-            <p>
+
                 <?php 
                 if($page == 'single-questionnaire'){ ?>
                     <a href="?">
@@ -250,18 +250,24 @@ function questionnaire_notice() {
                 } else {
                 ?>
                 <a href="?page=single-questionnaire&id=<?php echo $id_floating; ?>">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-check" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
-                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
-                </svg>
-                Questionnaire: <?php echo get_the_title($id_floating); ?>
+                <span style="display: flex;vertical-align: middle;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" fill="white" style="padding-right:10px;" class="bi bi-collection-play" viewBox="0 0 16 16">
+                        <path d="M2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3m2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1m2.765 5.576A.5.5 0 0 0 6 7v5a.5.5 0 0 0 .765.424l4-2.5a.5.5 0 0 0 0-.848l-4-2.5z"/>
+                        <path d="M1.5 14.5A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5zm13-1a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5h-13A.5.5 0 0 0 1 6v7a.5.5 0 0 0 .5.5z"/>
+                    </svg>
+                    <span style="display: inline-block;vertical-align: middle;">
+                        <b><?php echo get_the_title($id_floating); ?></b><br/>
+                        <span><?php echo get_post_meta($id_floating, '_cmb2_qa_group_description', true); ?></span>
+                    </span>
+                </span>
+                </a>
+                <a class="wss-red-button right-notice" href="?page=single-questionnaire&id=<?php echo $id_floating; ?>">
+                <?php echo get_post_meta($id_floating, '_cmb2_qa_group_button', true); ?>
                 </a>
                 <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ );?>../public/css/style.min.css">
                 <?php
                 }
                 ?>
-            </p>
             <!-- <a class="wss-close-button" onclick="tutupNotice()">X</a> -->
         </div>
     </div>

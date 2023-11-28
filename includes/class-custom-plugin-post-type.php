@@ -34,8 +34,8 @@
          register_post_type('questionnaire',
              array(
                  'labels' => array(
-                     'name' => __('Questionnaire'),
-                     'singular_name' => __('Questionnaire'),
+                    'name' => __('Module For You'),
+                    'singular_name' => __('Module For You'),
                  ),
                  'menu_icon' => 'dashicons-book',
                  'public' => true,

@@ -7,6 +7,57 @@ jQuery(document).ready(function ($) {
     },
   });
 
+  $(document).ready(function () {
+    // Fungsi untuk menyembunyikan opsi berdasarkan teks di dalam HTML opsi
+    function hideOptionsByValue(select, searchText) {
+      // Loop melalui setiap opsi dalam elemen select
+      select.find("option").each(function () {
+        // Periksa apakah teks di dalam HTML opsi mengandung searchText
+        if (
+          $(this)
+            .html()
+            .indexOf("(" + searchText + ")") === -1
+        ) {
+          // Sembunyikan opsi yang tidak mengandung searchText
+          $(this).hide();
+        } else {
+          // Tampilkan opsi yang mengandung searchText (jika sebelumnya disembunyikan)
+          $(this).show();
+        }
+      });
+    }
+
+    // Tangani perubahan pada setiap select di dalam class list-question
+    $(".cmb-field-list .list-question select").on("change", function () {
+      // Dapatkan nilai yang dipilih
+      var selectedValue = $(this).val();
+
+      // Temukan elemen grup yang sesuai
+      var group = $(this).closest(".cmb-field-list");
+
+      // Temukan select yang sesuai di dalam class list-answer
+      var correspondingSelect = group.find(".list-answer select");
+
+      // Menyembunyikan opsi berdasarkan teks di dalam HTML opsi
+      hideOptionsByValue(correspondingSelect, selectedValue);
+    });
+
+    // Panggil fungsi untuk menginisialisasi elemen select di dalam class list-answer saat halaman dimuat
+    $(".cmb-field-list .list-question select").each(function () {
+      // Dapatkan nilai yang dipilih
+      var selectedValue = $(this).val();
+
+      // Temukan elemen grup yang sesuai
+      var group = $(this).closest(".cmb-field-list");
+
+      // Temukan select yang sesuai di dalam class list-answer
+      var correspondingSelect = group.find(".list-answer select");
+
+      // Menyembunyikan opsi berdasarkan teks di dalam HTML opsi
+      hideOptionsByValue(correspondingSelect, selectedValue);
+    });
+  });
+
   // Menangkap perubahan pada checkbox
   $(".list-order input").change(function () {
     // Memperbarui nilai 'Urutan Post' hanya untuk checkbox dalam grup yang sama

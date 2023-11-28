@@ -35,14 +35,21 @@ class Custom_Plugin_CMB2 {
             'object_types' => array('questionnaire'), // Sesuaikan dengan jenis pos yang ingin Anda tambahkan metabox ini.
         ));
 
-        // $cmb->add_field(array(
-        //     'name' => esc_html__('Score', 'your-text-domain'),
-        //     'id'   => $prefix . 'score',
-        //     'type' => 'text',
-        //     'default' => 10, // Set nilai default di sini
-        //     'description' => esc_html__('Score per jawaban benar', 'your-text-domain'),
-        //     // Add any other necessary options here
-        // ));
+        $cmb->add_field(array(
+            'name' => esc_html__('Description', 'your-text-domain'),
+            'id'   => $prefix . 'description',
+            'type' => 'text',
+            'description' => esc_html__('Ditampilkan didalam notice', 'your-text-domain'),
+            // Add any other necessary options here
+        ));
+
+        $cmb->add_field(array(
+            'name' => esc_html__('Button Text', 'your-text-domain'),
+            'id'   => $prefix . 'button',
+            'type' => 'text',
+            'description' => esc_html__('Ditampilkan didalam notice', 'your-text-domain'),
+            // Add any other necessary options here
+        ));
 
         $group_field_id = $cmb->add_field(array(
             'id'          => $prefix . 'qa_group',
@@ -110,20 +117,24 @@ class Custom_Plugin_CMB2 {
         ));
 
         $cmb->add_group_field($group_penentu, array(
-            'name' => esc_html__('Nomor Pertanyaan', 'your-text-domain'),
+            'name' => esc_html__('If Question', 'your-text-domain'),
             'id'   => $prefix . 'number_question',
-            'type' => 'text',
-            'after'=> 'Isi dengan nomor urut pertanyaan.',
+            'type' => 'select',
+            'options_cb' => 'get_mpcs_question_options',
+            'classes' => 'list-question', // Ganti dengan kelas CSS yang diinginkan
+            // 'after'=> 'Isi dengan nomor urut pertanyaan.',
         ));
 
         $cmb->add_group_field($group_penentu, array(
-            'name' => esc_html__('Jawaban', 'your-text-domain'),
+            'name' => esc_html__('And Answer', 'your-text-domain'),
             'id'   => $prefix . 'and_answer',
             'type' => 'text',
-            // 'repeatable' => true,
+            'type' => 'select',
+            'options_cb' => 'get_mpcs_answer_options',
+            'classes' => 'list-answer', // Ganti dengan kelas CSS yang diinginkan
         ));
         $cmb->add_group_field($group_penentu, array(
-            'name' => esc_html__('Pilih Post', 'your-text-domain'),
+            'name' => esc_html__('Rekomendasi Modul', 'your-text-domain'),
             'id'   => $prefix . 'selected_post',
             'type' => 'multicheck',
             'show_option_none' => true,
@@ -152,6 +163,51 @@ class Custom_Plugin_CMB2 {
 
 // Inisialisasi class
 $custom_plugin_cmb2 = new Custom_Plugin_CMB2();
+
+function get_mpcs_question_options($field) {
+    $post_options = array();
+
+    global $wpdb;
+    $list_soals = get_post_meta($field->object_id, '_cmb2_qa_group_qa_group', true);
+    // Cek apakah terdapat hasil
+    if ($list_soals) {
+        $i = 1;
+        foreach ($list_soals as $result) {
+            $id = $i++;
+            $post_options[$id] = $result['_cmb2_qa_group_question'];
+        }
+    }
+    return $post_options;
+}
+
+function get_mpcs_answer_options($field) {
+    $post_options = array();
+
+    global $wpdb;
+    $list_soals = get_post_meta($field->object_id, '_cmb2_qa_group_qa_group', true);
+
+    // Cek apakah terdapat hasil
+    if ($list_soals) {
+        $i = 1;
+        foreach ($list_soals as $result) {
+            $j = $i++;
+            // echo '<pre>';
+            // print_r($result['_cmb2_qa_group_answer']);
+            // echo '</pre>';
+            $jawabans = $result['_cmb2_qa_group_answer'];
+            if($jawabans){
+                $x = 1;
+                foreach($jawabans as $data) {
+                    $y = $x++;
+                    // print_r($data);
+                    $post_options[$data] = '('.$j.') '.$data;
+                }
+            }
+        }
+    }
+    return $post_options;
+}
+
 // Fungsi untuk menghasilkan daftar post
 function get_mpcs_course_options($field) {
     $post_options = array();
