@@ -122,13 +122,12 @@ class Custom_Plugin_CMB2 {
             'type' => 'text',
             // 'repeatable' => true,
         ));
-        // Ganti 'your-text-domain' dengan domain teks tema atau plugin Anda
         $cmb->add_group_field($group_penentu, array(
             'name' => esc_html__('Pilih Post', 'your-text-domain'),
             'id'   => $prefix . 'selected_post',
             'type' => 'multicheck',
             'show_option_none' => true,
-            'options_cb' => 'get_mpcs_course_options', // Fungsi yang akan menghasilkan daftar post
+            'options_cb' => 'get_mpcs_course_options',
             'classes' => 'list-order', // Ganti dengan kelas CSS yang diinginkan
         ));
         $cmb->add_group_field($group_penentu, array(
@@ -154,7 +153,7 @@ class Custom_Plugin_CMB2 {
 // Inisialisasi class
 $custom_plugin_cmb2 = new Custom_Plugin_CMB2();
 // Fungsi untuk menghasilkan daftar post
-function get_mpcs_course_options() {
+function get_mpcs_course_options($field) {
     $post_options = array();
 
     global $wpdb;
@@ -162,14 +161,26 @@ function get_mpcs_course_options() {
     // Ganti 'mpcs-course' dengan nama post type yang sesuai
     $post_type = 'mpcs-course';
 
+    // Mengekstrak nomor grup dari ID dengan ekspresi reguler
+    $meta = get_post_meta($field->object_id, '_cmb2_qa_group_courses', true);
+    $full_id = $field->args( 'id' );
+    $number = str_replace('_cmb2_qa_group_courses_','',$full_id);
+    $number = str_replace('__cmb2_qa_group_selected_post','',$number);
+    $urutan = $meta[$number]['urutan_post_field'] ?? '';
+    // print_r($urutan);
+    $group_number = isset($matches[1]) ? intval($matches[1]) : 0;
+
+    // Ganti '_cmb2_qa_group_courses[%d][urutan_post_field]' sesuai dengan kunci meta yang sesuai
+    $meta_key = sprintf('_cmb2_qa_group_courses[%d][urutan_post_field]', $group_number);
+
     // Query untuk mendapatkan post ID, post title, dan urutan (jika tersedia)
     $query = "SELECT ID, post_title, meta_value
               FROM $wpdb->posts
-              LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = 'urutan_post_field') 
+              LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = %s) 
               WHERE post_type = %s AND post_status = 'publish'
               ORDER BY CAST(meta_value AS UNSIGNED), post_title";
     
-    $results = $wpdb->get_results($wpdb->prepare($query, $post_type));
+    $results = $wpdb->get_results($wpdb->prepare($query, $meta_key, $post_type));
     
     // Cek apakah terdapat hasil
     if ($results) {
@@ -179,5 +190,22 @@ function get_mpcs_course_options() {
             $post_options[$post_id] = $post_title;
         }
     }
-    return $post_options;
+
+    // Pisahkan string urutan menjadi array
+    $urutan_array = explode(',', $urutan);
+
+    // Buat array baru untuk menyimpan hasil
+    $result_post_options = array();
+
+    // Proses nilai yang sesuai urutan
+    foreach ($urutan_array as $id) {
+        if (isset($post_options[$id])) {
+            $result_post_options[$id] = $post_options[$id];
+            unset($post_options[$id]);
+        }
+    }
+
+    // Gabungkan nilai yang tidak sesuai urutan di bawahnya
+    $result_post_options += $post_options;
+    return $result_post_options;
 }
