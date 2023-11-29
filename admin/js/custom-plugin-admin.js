@@ -8,6 +8,44 @@ jQuery(document).ready(function ($) {
   });
 
   $(document).ready(function () {
+    $(".export-btn").on("click", function () {
+      exportTableToCSV($(".wp-list-table"));
+    });
+
+    function exportTableToCSV($table) {
+      var csv = [];
+
+      // Add table headers
+      var headers = [];
+      $table.find("thead th").each(function () {
+        headers.push($(this).text());
+      });
+      csv.push(headers.join(","));
+
+      // Add table rows
+      $table.find("tbody tr").each(function () {
+        var row = [];
+        $(this)
+          .find("td")
+          .each(function () {
+            row.push($(this).text());
+          });
+        csv.push(row.join(","));
+      });
+
+      // Create a Blob object and create a download link
+      var blob = new Blob([csv.join("\n")], { type: "text/csv" });
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "custom_fyp.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  });
+
+  $(document).ready(function () {
     // Fungsi untuk menyembunyikan opsi berdasarkan teks di dalam HTML opsi
     function hideOptionsByValue(select, searchText) {
       // Loop melalui setiap opsi dalam elemen select

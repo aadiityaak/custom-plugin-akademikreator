@@ -81,10 +81,12 @@ function save_hasil_questionnaire() {
 
 
         // Save answers
-        $ans = $anscheck = [];
-        foreach ($formData[$id_questionnaire] as $key => $val) {
+        $ans = $qsn = [];
+        foreach ($formData[$id_questionnaire]['jawaban'] as $key => $val) {
             $ans[$key] = [$key, $val, $id_questionnaire];
-            $anscheck[$key] = $val;
+        }
+        foreach ($formData[$id_questionnaire]['soal'] as $key => $val) {
+            $qsn[$key] = [$key, $val, $id_questionnaire];
         }
 
         $score_satuan = get_post_meta($id_questionnaire, '_cmb2_qa_group_score', true);
@@ -95,6 +97,7 @@ function save_hasil_questionnaire() {
             // Update post meta with questionnaire results
             update_post_meta($post_id, 'id_member', $id_member);
             update_post_meta($post_id, 'id_questionnaire', $id_questionnaire);
+            update_post_meta($post_id, 'question', $qsn);
             update_post_meta($post_id, 'answer', $ans);
             // Respond with success message or other relevant data
             echo 'Post inserted successfully with ID: ' . $post_id;
@@ -195,7 +198,7 @@ function tampilkan_form_pilih_questionnaire() {
     <div class="wrap">
         <h2>Pilih Questionnaire</h2>
         <form method="post" action="">
-            <label for="select_questionnaire">Pilih Questionnaire:</label>
+            <label for="select_questionnaire">Pilih Questionnaire:</label><br>
             <select name="select_questionnaire" id="select_questionnaire">
                 <option>-</option>
                 <?php
@@ -208,9 +211,10 @@ function tampilkan_form_pilih_questionnaire() {
                 }
                 ?>
             </select>
-            <br>
+            <br><br>
             <input type="submit" name="save_questionnaire" class="button button-primary" value="Save">
         </form>
+
     </div>
     <?php
 }
@@ -345,3 +349,95 @@ function theme_register_menus() {
     );
 }
 add_action('after_setup_theme', 'theme_register_menus');
+
+
+// Hook to add submenu page
+add_action('admin_menu', 'custom_questionnaire_submenu');
+
+// Callback function to add submenu page
+function custom_questionnaire_submenu() {
+    add_submenu_page(
+        'edit.php?post_type=questionnaire',
+        'Export Result',
+        'Export Result',
+        'manage_options',
+        'custom_table_page',
+        'custom_table_page_callback'
+    );
+}
+
+// Callback function to display the table
+function custom_table_page_callback() {
+    $post_question = get_option('selected_questionnaire');
+    echo '<div class="wrap"><h2>Export Table '.get_the_title($post_question).'</h2>';
+    
+    // Fetch and display the table
+    custom_display_table();
+    
+    echo '</div>';
+}
+
+// Function to display the table
+function custom_display_table() {
+    global $post;
+    $post_question = get_option('selected_questionnaire');
+    $get_soals = get_post_meta($post_question,'_cmb2_qa_group_qa_group', true);
+    $args = array(
+        'post_type'      => 'questionnaire_result', // Ganti dengan jenis posting Anda
+        'posts_per_page' => 1, // Jumlah posting yang ingin diambil
+        'meta_query'     => array(
+            array(
+                'key'   => 'id_questionnaire',
+                'value' => $post_question,
+                'compare' => '=',
+            ),
+        ),
+    );
+    $query = new WP_Query($args);
+
+    echo '<button class="export-btn button button-primary button-large">Export to CSV</button>';
+    echo '<table class="wp-list-table widefat fixed striped" style="margin-top:20px;">';
+    
+    // Display table headers
+    echo '<thead><tr>';
+        echo '<th>Nama</th>';
+        foreach($get_soals as $get_soal) {
+            echo '<th>' . $get_soal['_cmb2_qa_group_question']. '</th>';
+        }
+    echo '</tr></thead><tbody>';
+
+    // Display table rows
+    if ($query->have_posts()) {
+        // Ada posting yang sesuai dengan kriteria
+        while ($query->have_posts()) {
+            $query->the_post();
+            $result_meta = get_post_meta($post->ID);
+            $answers = get_post_meta($post->ID, 'answer', true);
+            $questions = get_post_meta($post->ID, 'question', true);
+            $id_member = get_post_meta($post->ID, 'id_member', true);
+            $user_info = get_userdata($id_member);
+            $username = $user_info->user_login;
+
+            $combine = [];
+            foreach($answers as $data){
+                $combine[$questions[$data[0]][1]] = $answers[$data[0]][1];
+            }
+            // echo '<pre>';
+            // print_r($combine);
+            // echo '</pre>';
+            echo '<tr>';
+                echo '<td>';
+                echo esc_html($username);
+                echo '</td>';
+                foreach($get_soals as $get_soal) {
+                    echo '<td>';
+                    echo $combine[$get_soal['_cmb2_qa_group_question']] ?? '-';
+                    echo '</td>';
+                }
+            echo '</tr>';
+        }
+        wp_reset_postdata(); // Reset global post data
+    }
+
+    echo '</tbody></table>';
+}

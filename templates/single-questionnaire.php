@@ -107,7 +107,7 @@ function wss_questionnaire_single($post_id) {
                                         // echo $option .'=='. $result_meta['qna_'.$post_id.$j][1];
                                         ?>
                                         <div class="wss-w-50 d-flex wss-p-1">
-                                            <input class="wss-d-none change-parent" id="<?php echo $post_id.$j.$y; ?>" data-question="<?php echo $j; ?>" type="radio" name="<?php echo 'qna_'.$post_id.$j; ?>" value="<?php echo $option; ?>" aria-label="Checkbox for following text input" <?php echo $checked; ?>>
+                                            <input class="wss-d-none change-parent" id="<?php echo $post_id.$j.$y; ?>" data-question="<?php echo $j; ?>" data-question-text="<?php echo $qna['_cmb2_qa_group_question']; ?>" type="radio" name="<?php echo 'qna_'.$post_id.$j; ?>" value="<?php echo $option; ?>" aria-label="Checkbox for following text input" <?php echo $checked; ?>>
                                             <label class="wss-pl-2 wss-d-block wss-cursor-pointer" for="<?php echo $post_id.$j.$y; ?>">
                                                 <span><?php echo $option; ?></span>
                                             </label>

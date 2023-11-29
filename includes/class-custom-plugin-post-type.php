@@ -134,14 +134,14 @@
                 echo '<a target="_blank" href="'.$url_questionnaire.'">'.$title_questionnaire.'</a>';
                 break;
             case 'answer':
+                $questions = get_post_meta($post_id,'question', true);
                 $answers = get_post_meta($post_id,'answer', true);
                 $i= 1;
+
                 foreach($answers as $answer){
                     $j = $i++;
-                    $soal = get_post_meta($answer[2],'_cmb2_qa_group_qa_group', true);
-                    $soal = $soal[$j]['_cmb2_qa_group_question'];
-                    // print_r($soal);
-                    // echo '<b>'.$soal.'</b><br/>';
+
+                    echo '<b>'.$questions[$answer[0]][1].'</b>: ';
                     echo ' '.$answer[1].'<br/>';
                 }
                 break;
