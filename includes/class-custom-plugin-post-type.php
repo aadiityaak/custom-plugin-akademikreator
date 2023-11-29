@@ -113,7 +113,7 @@
         // Add custom columns
         $columns['id_member'] = 'Member (Responden)';
         $columns['id_questionnaire'] = 'Questionnaire';
-
+        $columns['answer'] = 'Jawaban';
         return $columns;
     }
     
@@ -132,6 +132,18 @@
                 $title_questionnaire = get_the_title($id_questionnaire);
                 $url_questionnaire = get_the_permalink($id_questionnaire);
                 echo '<a target="_blank" href="'.$url_questionnaire.'">'.$title_questionnaire.'</a>';
+                break;
+            case 'answer':
+                $answers = get_post_meta($post_id,'answer', true);
+                $i= 1;
+                foreach($answers as $answer){
+                    $j = $i++;
+                    $soal = get_post_meta($answer[2],'_cmb2_qa_group_qa_group', true);
+                    $soal = $soal[$j]['_cmb2_qa_group_question'];
+                    // print_r($soal);
+                    // echo '<b>'.$soal.'</b><br/>';
+                    echo ' '.$answer[1].'<br/>';
+                }
                 break;
             // Add more cases for additional columns if needed
         }
