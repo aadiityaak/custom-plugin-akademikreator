@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       {REPLACE_ME_URL}
+ * @link       https://websweetstudio.com
  * @since      1.0.0
  *
  * @package    Custom_Plugin
@@ -25,7 +25,7 @@
  * @since      1.0.0
  * @package    Custom_Plugin
  * @subpackage Custom_Plugin/includes
- * @author     {REPLACE_ME_AUTHOR}
+ * @author     Aditya K
  */
 class Custom_Plugin {
 

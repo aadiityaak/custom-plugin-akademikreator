@@ -5,7 +5,7 @@
  *
  * This file is used to markup the public-facing aspects of the plugin.
  *
- * @link       {REPLACE_ME_URL}
+ * @link       https://websweetstudio.com
  * @since      1.0.0
  *
  * @package    Custom_Plugin

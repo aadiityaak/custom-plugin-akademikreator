@@ -3,7 +3,7 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       {REPLACE_ME_URL}
+ * @link       https://websweetstudio.com
  * @since      1.0.0
  *
  * @package    Custom_Plugin
@@ -19,7 +19,7 @@
  *
  * @package    Custom_Plugin
  * @subpackage Custom_Plugin/includes
- * @author     {REPLACE_ME_AUTHOR}
+ * @author     Aditya K
  */
 class Custom_Plugin_Loader {
 

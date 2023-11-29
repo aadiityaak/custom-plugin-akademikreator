@@ -399,13 +399,36 @@ a.wss-red-button:hover {
   text-decoration: none;
   cursor: pointer;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   .wss-notice {
     display: block !important;
   }
   .wss-notice {
     padding: 10px;
-    margin: 15px 14px;
+    margin: 15px 14px 40px !important;
+  }
+  a.wss-red-button {
+    width: 100% !important;
+    margin: 11px auto !important;
+    display: block !important;
+    text-align: center
+    }
+    .ac-filter-course {
+    width: 95%;
+    }
+    .post-type-archive-mpcs-course .entry-content {
+        display:block;
+    }
+  .ac-filter-course {
+    position: relative !important;
+    width:100% !important
+  }
+  .container.grid-xl {
+    margin:0 !important
+  }
+  .ets-discord-connection-wrapper a {
+    text-align: center;
+    width: 100%;
   }
 }
 .wss-btn-submit:hover {

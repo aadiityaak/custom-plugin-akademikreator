@@ -3,7 +3,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       {REPLACE_ME_URL}
+ * @link       https://websweetstudio.com
  * @since      1.0.0
  *
  * @package    Custom_Plugin
@@ -18,7 +18,7 @@
  *
  * @package    Custom_Plugin
  * @subpackage Custom_Plugin/public
- * @author     {REPLACE_ME_AUTHOR}
+ * @author     Aditya K
  */
 class Custom_Public {
 
@@ -73,7 +73,7 @@ class Custom_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/style.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/style.min.css', array(), '1.0.3', 'all' );
 
 	}
 

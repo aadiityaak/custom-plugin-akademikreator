@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @link       {REPLACE_ME_URL}
+ * @link       https://websweetstudio.com
  * @since      1.0.0
  *
  * @package    Custom_Plugin

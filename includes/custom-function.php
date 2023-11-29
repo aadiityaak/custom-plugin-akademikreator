@@ -3,7 +3,7 @@
 /**
  * Masukkan semua function tambahan disini
  *
- * @link       {REPLACE_ME_URL}
+ * @link       https://websweetstudio.com
  * @since      1.0.0
  *
  * @package    Custom_Plugin
@@ -346,25 +346,48 @@ function theme_register_menus() {
 }
 add_action('after_setup_theme', 'theme_register_menus');
 
-// function custom_archive_query($query) {
-//     if (is_archive() && $query->is_main_query() && isset($_GET['page']) && $_GET['page'] == 'for-you') {
-//         // Daftar post ID yang diinginkan
-//         $post_ids = list_fyp();
+add_action('admin_menu', 'add_export_button');
 
-//         // Extract the inner array containing the post IDs
-//         $post_ids = reset($post_ids);
-//         $post_ids = array_map('intval', $post_ids);
+function add_export_button() {
+    add_submenu_page(
+        'edit.php?post_type=questionnaire',
+        'Export Hasil',
+        'Export Hasil',
+        'manage_options',
+        'export-xlsx',
+        'export_to_xlsx'
+    );
+}
 
-//         if($post_ids){
-//             // Set argument untuk WP_Query
-//             $query->set('posts_per_page', '6');
-//             $query->set('post__in', $post_ids);
-//             $query->set('orderby', 'post__in');
-//             echo '<pre>';
-//             print_r($query);
-//             echo '</pre>';
-//         }
-//     }
-// }
-// // Hook fungsi di atas ke pre_get_posts
-// add_action('pre_get_posts', 'custom_archive_query');
+function export_to_xlsx() {
+    // Load PhpSpreadsheet library
+    require_once 'PhpSpreadsheet/phpstan-conditional.php';
+
+    // Ambil data post type
+    $posts = get_posts(array('post_type' => 'questionnaire_result', 'numberposts' => -1));
+
+    // Buat objek Spreadsheet
+    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+
+    // Header kolom
+    $sheet->setCellValue('A1', 'Title');
+    $sheet->setCellValue('B1', 'Content');
+    // Tambahkan kolom metanya sesuai kebutuhan
+
+    // Isi data
+    $row = 2;
+    foreach ($posts as $post) {
+        $sheet->setCellValue('A' . $row, $post->post_title);
+        $sheet->setCellValue('B' . $row, $post->post_content);
+        // Isi kolom metanya sesuai kebutuhan
+        $row++;
+    }
+
+    // Simpan sebagai file XLSX
+    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+    $writer->save('export.xlsx');
+
+    // Redirect atau tampilkan pesan sukses
+    echo 'Export berhasil. <a href="' . admin_url('admin.php?page=export-xlsx') . '">Kembali</a>';
+}

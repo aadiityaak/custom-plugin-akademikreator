@@ -8,17 +8,17 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              {REPLACE_ME_URL}
+ * @link              https://websweetstudio.com
  * @since             1.0.0
  * @package           Custom_Plugin
  *
  * @wordpress-plugin
  * Plugin Name:       Custom Plugin
- * Plugin URI:        {REPLACE_ME_URL}
+ * Plugin URI:        https://websweetstudio.com
  * Description:       Plugin untuk web custom.
  * Version:           1.0.1
- * Author:            {REPLACE_ME_AUTHOR}
- * Author URI:        {REPLACE_ME_URL}
+ * Author:            Aditya K
+ * Author URI:        https://websweetstudio.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       custom-plugin
