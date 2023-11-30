@@ -384,7 +384,7 @@ function custom_display_table() {
     $get_soals = get_post_meta($post_question,'_cmb2_qa_group_qa_group', true);
     $args = array(
         'post_type'      => 'questionnaire_result', // Ganti dengan jenis posting Anda
-        'posts_per_page' => 1, // Jumlah posting yang ingin diambil
+        'posts_per_page' => -1, // Jumlah posting yang ingin diambil
         'meta_query'     => array(
             array(
                 'key'   => 'id_questionnaire',
@@ -402,7 +402,9 @@ function custom_display_table() {
     echo '<thead><tr>';
         echo '<th>Nama</th>';
         foreach($get_soals as $get_soal) {
-            echo '<th>' . $get_soal['_cmb2_qa_group_question']. '</th>';
+            echo '<th>';
+            echo $get_soal['_cmb2_qa_group_question'] ?? '-';
+            echo '</th>';
         }
     echo '</tr></thead><tbody>';
 
@@ -420,7 +422,9 @@ function custom_display_table() {
 
             $combine = [];
             foreach($answers as $data){
-                $combine[$questions[$data[0]][1]] = $answers[$data[0]][1];
+                if(isset($questions[$data[0]][1])) {
+                    $combine[$questions[$data[0]][1]] = $answers[$data[0]][1] ?? '-';
+                }
             }
             // echo '<pre>';
             // print_r($combine);

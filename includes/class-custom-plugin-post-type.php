@@ -141,8 +141,11 @@
                 foreach($answers as $answer){
                     $j = $i++;
 
-                    echo '<b>'.$questions[$answer[0]][1].'</b>: ';
-                    echo ' '.$answer[1].'<br/>';
+                    echo '<b>';
+                    echo $questions[$answer[0]][1] ?? '-';
+                    echo '</b>';
+                    echo $answer[1] ?? '-';
+                    echo '<br/>';
                 }
                 break;
             // Add more cases for additional columns if needed
